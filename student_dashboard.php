@@ -193,10 +193,10 @@ $status_color = ($attendance >= 75) ? '#00ff00' : '#FF3131';
                 <h3>/ ASSIGNMENTS_SUBMISSION</h3>
                 <div style="margin-top: 15px; max-height: 400px; overflow-y: auto;">
                     <?php
-                    $my_div = $me['class_name'] ?? '';
-                    $my_batch = $me['batch_name'] ?? '';
+                    $my_div = !empty($me['class_name']) ? $me['class_name'] : ($me['division'] ?? '');
+                    $my_batch = !empty($me['batch_name']) ? $me['batch_name'] : ($me['lab_batch'] ?? 'ALL');
                     
-                    $assigns = $conn->query("SELECT * FROM assignments WHERE division = '$my_div' AND (batch_id = '$my_batch' OR batch_id = 'ALL') ORDER BY id DESC");
+                    $assigns = $conn->query("SELECT * FROM assignments WHERE (division = '$my_div' OR division = 'ALL') AND (batch_id = '$my_batch' OR batch_id = 'ALL') ORDER BY id DESC");
                     
                     if($assigns && $assigns->num_rows > 0):
                         while($as = $assigns->fetch_assoc()): 

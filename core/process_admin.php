@@ -143,6 +143,24 @@ if ($action == 'quick_enroll') {
     exit();
 }
 
+// --- 9. ADD TIMETABLE ---
+if ($action == 'add_timetable') {
+    $class_id = intval($_POST['class_id']);
+    $batch = $_POST['batch_id'];
+    $subject = $_POST['subject'];
+    $day = $_POST['day'];
+    $start_time = $_POST['start_time'];
+    
+    $end_time = date('H:i', strtotime($start_time) + 3600);
+
+    $stmt = $conn->prepare("INSERT INTO timetable (class_id, batch_id, subject_name, day_of_week, start_time, end_time) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssss", $class_id, $batch, $subject, $day, $start_time, $end_time);
+    $stmt->execute();
+    
+    header("Location: ../admin_dashboard.php?status=timetable_added");
+    exit();
+}
+
 // --- 10. FALLBACK REDIRECT ---
 header("Location: ../admin_dashboard.php");
 exit();
