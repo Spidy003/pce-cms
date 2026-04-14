@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // === GEMINI API INTEGRATION ===
     // Place your Gemini API Key here.
     // NOTE: For a real production app, restrict your API key to your specific domain to prevent theft!
-    const GEMINI_API_KEY = "AIzaSyDjDUDarjqpI5yqXt_lN5f0qV4XUIfR4I4"; 
+    const GEMINI_API_KEY = "AIzaSyBV5jHjHRPE2I07V1Jd0lK9yTxc99qyr0I";
 
     // Auto-pop the chatbot after 2 seconds so you don't even have to click the button
     setTimeout(() => {

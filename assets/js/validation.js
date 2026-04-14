@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             errorSpan.style.display = 'block';
         }
         inputElement.classList.add('error-border');
+        inputElement.classList.remove('success-border');
     }
 
     // --- HELPER FUNCTION: CLEAR ERROR ---
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             errorSpan.style.display = 'none';
         }
         inputElement.classList.remove('error-border');
+        inputElement.classList.add('success-border');
     }
 
     // --- REGULAR EXPRESSIONS ---

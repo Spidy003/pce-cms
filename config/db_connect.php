@@ -1,23 +1,35 @@
 <?php
-// db_connect.php
-$host = getenv('DB_HOST') ?: "sql207.infinityfree.com";
-$user = getenv('DB_USER') ?: "if0_41660314";
-$pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : "h9ELE7cxjpsJ8g"; 
-$dbname = getenv('DB_NAME') ?: "if0_41660314_college_db";
-$port = getenv('DB_PORT') ?: 3306;
+// db_connect.php — Auto-detects Local vs Production environment
+
+$isLocal = in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0.1', '::1'])
+           || str_contains(strtolower($_SERVER['HTTP_HOST'] ?? ''), 'localhost');
+
+if ($isLocal) {
+    // ============================================================
+    // LOCAL XAMPP SETTINGS — used when running on your computer
+    // ============================================================
+    $host   = "localhost";
+    $user   = "root";       // XAMPP default username
+    $pass   = "";           // XAMPP default password (empty)
+    $dbname = "pce_college_db"; // Your local database name
+    $port   = 3306;
+} else {
+    // ============================================================
+    // PRODUCTION INFINITYFREE SETTINGS — used on live server
+    // ============================================================
+    $host   = "sql207.infinityfree.com";
+    $user   = "if0_41660314";
+    $pass   = "h9ELE7cxjpsJ8g";
+    $dbname = "if0_41660314_college_db";
+    $port   = 3306;
+}
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
-    // Adding the port explicitly helps bypass most "Access Denied" socket errors
     $conn = new mysqli($host, $user, $pass, $dbname, $port);
     $conn->set_charset("utf8mb4");
 } catch (mysqli_sql_exception $e) {
-    // If 127.0.0.1 fails, try the alternative socket connection
-    try {
-        $conn = new mysqli("localhost", $user, $pass, $dbname);
-    } catch (mysqli_sql_exception $e2) {
-        die("CRITICAL_CONNECTION_ERROR: " . $e2->getMessage());
-    }
+    die("CRITICAL_CONNECTION_ERROR: " . $e->getMessage() . " on " . ($isLocal ? "localhost" : "production"));
 }
 ?>

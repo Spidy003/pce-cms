@@ -1,70 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCE | PILLAI COLLEGE OF ENGINEERING</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Space+Grotesk:wght@800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Space+Grotesk:wght@800&display=swap"
+        rel="stylesheet">
     <style>
         /* --- AI CHATBOT WIDGET INLINE --- */
-        .pomo-toggle-btn { position: fixed; bottom: 30px; right: 30px; background: #ffff00; border: 4px solid black; padding: 15px 20px; font-family: 'JetBrains Mono', monospace; font-weight: 900; box-shadow: 6px 6px 0px black; cursor: pointer; z-index: 1000; transition: 0.2s; font-size: 1.1rem; color: black; }
-        .pomo-toggle-btn:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0px black; }
-        .pomodoro-widget { position: fixed; bottom: 90px; right: 30px; width: 350px; background: white; border: 5px solid black; box-shadow: 10px 10px 0px black; z-index: 1100; font-family: 'Space Grotesk', sans-serif; display: flex; flex-direction: column; }
-        .pomo-header { background: #0077ff; color: white; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid black; }
-        .pomo-header h3 { font-family: 'JetBrains Mono', monospace; font-weight: 900; font-size: 1.1rem; margin: 0; }
-        .pomo-close-btn { background: #ff007f; color: white; border: 3px solid black; width: 30px; height: 30px; font-weight: bold; cursor: pointer; box-shadow: 2px 2px 0px black; display: flex; align-items: center; justify-content: center; }
-        .pomo-close-btn:hover { background: white; color: black; }
-        .chat-body { padding: 15px; display: flex; flex-direction: column; gap: 10px; height: 300px; overflow-y: auto; background: #fdfdfd; border-bottom: 4px solid black; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
-        .chat-message { padding: 10px; border: 2px solid black; width: 85%; line-height: 1.4; word-wrap: break-word;}
-        .ai-message { background: #eeeeee; align-self: flex-start; box-shadow: 3px 3px 0px black; }
-        .user-message { background: #ffff00; align-self: flex-end; box-shadow: -3px 3px 0px black; }
-        .chat-input-area { display: flex; padding: 10px; background: #ffffff; gap: 10px; }
-        .chat-input-area input { flex-grow: 1; border: 3px solid black; padding: 8px; font-family: 'JetBrains Mono', monospace; outline: none; }
-        .chat-input-area input:focus { background: #ffff00; }
-        .pomo-btn { font-family: 'JetBrains Mono', monospace; font-weight: 900; border: 3px solid black; padding: 8px 15px; cursor: pointer; box-shadow: 3px 3px 0px black; transition: 0.1s; font-size: 1.1rem; color: black; display: flex; align-items: center; justify-content: center;}
-        .pomo-btn:active { transform: translate(3px, 3px); box-shadow: 0px 0px 0px black; }
-        .bg-green { background: #00ff00; }
+        .pomo-toggle-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ffff00;
+            border: 4px solid black;
+            padding: 15px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 900;
+            box-shadow: 6px 6px 0px black;
+            cursor: pointer;
+            z-index: 1000;
+            transition: 0.2s;
+            font-size: 1.1rem;
+            color: black;
+        }
 
-        @keyframes blink { from { opacity: 1; } to { opacity: 0.2; } }
+        .pomo-toggle-btn:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0px black;
+        }
+
+        .pomodoro-widget {
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            width: 350px;
+            background: white;
+            border: 5px solid black;
+            box-shadow: 10px 10px 0px black;
+            z-index: 1100;
+            font-family: 'Space Grotesk', sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pomo-header {
+            background: #0077ff;
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid black;
+        }
+
+        .pomo-header h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 900;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .pomo-close-btn {
+            background: #ff007f;
+            color: white;
+            border: 3px solid black;
+            width: 30px;
+            height: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pomo-close-btn:hover {
+            background: white;
+            color: black;
+        }
+
+        .chat-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 300px;
+            overflow-y: auto;
+            background: #fdfdfd;
+            border-bottom: 4px solid black;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .chat-message {
+            padding: 10px;
+            border: 2px solid black;
+            width: 85%;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .ai-message {
+            background: #eeeeee;
+            align-self: flex-start;
+            box-shadow: 3px 3px 0px black;
+        }
+
+        .user-message {
+            background: #ffff00;
+            align-self: flex-end;
+            box-shadow: -3px 3px 0px black;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 10px;
+            background: #ffffff;
+            gap: 10px;
+        }
+
+        .chat-input-area input {
+            flex-grow: 1;
+            border: 3px solid black;
+            padding: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            outline: none;
+        }
+
+        .chat-input-area input:focus {
+            background: #ffff00;
+        }
+
+        .pomo-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 900;
+            border: 3px solid black;
+            padding: 8px 15px;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px black;
+            transition: 0.1s;
+            font-size: 1.1rem;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pomo-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: 0px 0px 0px black;
+        }
+
+        .bg-green {
+            background: #00ff00;
+        }
+
+        @keyframes blink {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0.2;
+            }
+        }
 
         @media (max-width: 480px) {
-            .pomodoro-widget { width: 90vw; right: 5vw; bottom: 80px; }
-            .pomo-toggle-btn { bottom: 20px; right: 20px; font-size: 0.9rem; padding: 10px 15px; }
+            .pomodoro-widget {
+                width: 90vw;
+                right: 5vw;
+                bottom: 80px;
+            }
+
+            .pomo-toggle-btn {
+                bottom: 20px;
+                right: 20px;
+                font-size: 0.9rem;
+                padding: 10px 15px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div id="cursor"></div>
 
     <div class="grid-wrapper">
-        
+
 
         <nav>
-    <div class="nav-container">
-        <div class="brand-box">PCE.CMS</div>
-        
-        <div class="nav-links">
-            <a href="#about" class="hire-me-btn">ABOUT</a>
-            <a href="#departments" class="hire-me-btn">DEPARTMENTS</a>
-            <a href="#associations" class="hire-me-btn">ASSOCIATIONS</a>
-            <a href="auth/login.php" class="hire-me-btn">LOGIN</a>
-        </div>
+            <div class="nav-container">
+                <div class="brand-box">PCE.CMS</div>
 
-        <div class="hamburger" onclick="toggleMobileMenu()">
-            <i class="ri-menu-3-line" style="font-size: 1.5rem; font-weight: bold;"></i>
-        </div>
-    </div>
+                <div class="nav-links">
+                    <a href="#about" class="hire-me-btn">ABOUT</a>
+                    <a href="#departments" class="hire-me-btn">DEPARTMENTS</a>
+                    <a href="#associations" class="hire-me-btn">ASSOCIATIONS</a>
+                    <a href="auth/login.php" class="hire-me-btn">LOGIN</a>
+                </div>
 
-    <div id="mobile-menu" class="mobile-menu-overlay">
-        <a href="#about" onclick="toggleMobileMenu()">/ABOUT</a>
-        <a href="#departments" onclick="toggleMobileMenu()">/DEPTS</a>
-        <a href="auth/login.php" class="hire-me-btn">LOGIN</a>
+                <div class="hamburger" onclick="toggleMobileMenu()">
+                    <i class="ri-menu-3-line" style="font-size: 1.5rem; font-weight: bold;"></i>
+                </div>
+            </div>
 
-    </div>
-</nav>
+            <div id="mobile-menu" class="mobile-menu-overlay">
+                <a href="#about" onclick="toggleMobileMenu()">/ABOUT</a>
+                <a href="#departments" onclick="toggleMobileMenu()">/DEPTS</a>
+                <a href="auth/login.php" class="hire-me-btn">LOGIN</a>
+
+            </div>
+        </nav>
 
         <main class="landing-wrapper">
             <section class="hero-section">
@@ -74,7 +226,7 @@
                 </div>
 
                 <div class="welcome-text reveal">WELCOME TO PILLAI COLLEGE OF ENGINEERING</div>
-                
+
                 <h1 class="hero-title reveal">
                     ENGINEERING<br>
                     UNFILTERED
@@ -95,370 +247,417 @@
 
     <div class="marquee">
         <div class="marquee-inner">
-            <span>/// IA-1 EXAMS STARTING FEB 20TH /// ALEGRIA FESTIVAL REGISTRATIONS ARE LIVE /// SUBMIT ASSIGNMENTS BY FRIDAY /// VISIT THE NEW AI LAB IN SECTOR 16 ///</span>
-            <span>/// IA-1 EXAMS STARTING FEB 20TH /// ALEGRIA FESTIVAL REGISTRATIONS ARE LIVE /// SUBMIT ASSIGNMENTS BY FRIDAY /// VISIT THE NEW AI LAB IN SECTOR 16 ///</span>
+            <span>/// IA-1 EXAMS STARTING FEB 20TH /// ALEGRIA FESTIVAL REGISTRATIONS ARE LIVE /// SUBMIT ASSIGNMENTS BY
+                FRIDAY /// VISIT THE NEW AI LAB IN SECTOR 16 ///</span>
+            <span>/// IA-1 EXAMS STARTING FEB 20TH /// ALEGRIA FESTIVAL REGISTRATIONS ARE LIVE /// SUBMIT ASSIGNMENTS BY
+                FRIDAY /// VISIT THE NEW AI LAB IN SECTOR 16 ///</span>
         </div>
     </div>
 
     <section id="about" class="about-container reveal">
-    <div class="about-card">
-        <div class="image-terminal">
-            <div class="terminal-tag">AVATAR.JPG</div>
-            <img src="https://www.pce.ac.in/wp-content/uploads/2021/11/Perks-of-Pillai-3.jpg" alt="PCE Campus">
-        </div>
-
-        <div class="about-content">
-            <h2 class="about-title">PILLAI COLLEGE<br>ENGINEERING</h2>
-            
-            <div class="about-text">
-                <p>
-                    We are PCE. A hub for hackers, creators, and engineers who want the break the mold. We bring <span class="highlight-yellow">personality</span> back the code.
-                </p>
+        <div class="about-card">
+            <div class="image-terminal">
+                <div class="terminal-tag">AVATAR.JPG</div>
+                <img src="https://www.pce.ac.in/wp-content/uploads/2021/11/Perks-of-Pillai-3.jpg" alt="PCE Campus">
             </div>
 
-            <div class="meta-row">
-                <div class="meta-badge badge-black">
-                    <i class="ri-map-pin-2-fill"></i> LOCATION: NEW PANVEL
+            <div class="about-content">
+                <h2 class="about-title">PILLAI COLLEGE<br>ENGINEERING</h2>
+
+                <div class="about-text">
+                    <p>
+                        We are PCE. A hub for hackers, creators, and engineers who want the break the mold. We bring
+                        <span class="highlight-yellow">personality</span> back the code.
+                    </p>
                 </div>
-                <div class="meta-badge badge-green">
-                    <div class="status-dot"></div> STATUS: NAAC A++
+
+                <div class="meta-row">
+                    <div class="meta-badge badge-black">
+                        <i class="ri-map-pin-2-fill"></i> LOCATION: NEW PANVEL
+                    </div>
+                    <div class="meta-badge badge-green">
+                        <div class="status-dot"></div> STATUS: NAAC A++
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<section id="departments" class="dept-container reveal">
-    <div class="dept-header">
-        <div class="header-meta">
-            <span class="text-green">DEPARTMENTS SECTION</span>
-            <h2 class="dept-main-title">DEPARTMENTS</h2>
-        </div>
-        
+    </section>
+    <section id="departments" class="dept-container reveal">
+        <div class="dept-header">
+            <div class="header-meta">
+                <span class="text-green">DEPARTMENTS SECTION</span>
+                <h2 class="dept-main-title">DEPARTMENTS</h2>
+            </div>
 
-        <div class="neo-divider"></div>
-    </div>
 
-    <div class="dept-grid">
-        <div class="dept-card hover-blue">
-            <div class="dept-tag">>_ UG_DEGREE</div>
-            <h3 class="dept-name">AUTOMOBILE<br>ENGINEERING</h3>
+            <div class="neo-divider"></div>
         </div>
 
-        <div class="dept-card hover-pink">
-            <div class="dept-tag">>_ UG_DEGREE</div>
-            <h3 class="dept-name">COMPUTER<br>TECHNOLOGY</h3>
-        </div>
+        <div class="dept-grid">
+            <div class="dept-card hover-blue">
+                <div class="dept-tag">>_ UG_DEGREE</div>
+                <h3 class="dept-name">AUTOMOBILE<br>ENGINEERING</h3>
+            </div>
 
-        <div class="dept-card hover-yellow">
-            <div class="dept-tag">>_ UG_DEGREE</div>
-            <h3 class="dept-name">ELECTRONICS<br>& TELECOMM.</h3>
-        </div>
+            <div class="dept-card hover-pink">
+                <div class="dept-tag">>_ UG_DEGREE</div>
+                <h3 class="dept-name">COMPUTER<br>TECHNOLOGY</h3>
+            </div>
 
-        <div class="dept-card hover-green">
-            <div class="dept-tag">>_ UG_DEGREE</div>
-            <h3 class="dept-name">ELECTRONICS<br>COMPUTER SCI</h3>
-        </div>
+            <div class="dept-card hover-yellow">
+                <div class="dept-tag">>_ UG_DEGREE</div>
+                <h3 class="dept-name">ELECTRONICS<br>& TELECOMM.</h3>
+            </div>
 
-        <div class="dept-card hover-blue">
-            <div class="dept-tag">>_ UG_DEGREE</div>
-            <h3 class="dept-name">INFORMATION<br>TECHNOLOGY</h3>
-        </div>
+            <div class="dept-card hover-green">
+                <div class="dept-tag">>_ UG_DEGREE</div>
+                <h3 class="dept-name">ELECTRONICS<br>COMPUTER SCI</h3>
+            </div>
 
-        <div class="dept-card hover-pink">
-            <div class="dept-tag">>_ UG_DEGREE</div>
-            <h3 class="dept-name">MECHNAICAL<br>ENGINEERING</h3>
-        </div>
+            <div class="dept-card hover-blue">
+                <div class="dept-tag">>_ UG_DEGREE</div>
+                <h3 class="dept-name">INFORMATION<br>TECHNOLOGY</h3>
+            </div>
 
-        <div class="dept-card hover-yellow">
-            <div class="dept-tag">>_ UG_DEGREE</div>
-            <h3 class="dept-name">APPLIED SCIENCE<br>MATHEMATICS</h3>
-        </div>
+            <div class="dept-card hover-pink">
+                <div class="dept-tag">>_ UG_DEGREE</div>
+                <h3 class="dept-name">MECHNAICAL<br>ENGINEERING</h3>
+            </div>
 
-        <div class="dept-card hover-green">
-            <div class="dept-tag">>_ UG_DEGREE</div>
-            <h3 class="dept-name">CYBER<br>SECURITY</h3>
-        </div>
-    </div>
+            <div class="dept-card hover-yellow">
+                <div class="dept-tag">>_ UG_DEGREE</div>
+                <h3 class="dept-name">APPLIED SCIENCE<br>MATHEMATICS</h3>
+            </div>
 
-    <div class="dept-footer">
-        <div class="neo-divider"></div>
-        <div class="footer-stats">
-            <span>TOTAL_DEPARTMENTS: 08</span>
-            <span>TOTAL_FACULTY: 112</span>
-        </div>
-    </div>
-</section>
-
-<section class="achievements-section reveal">
-    <div class="achievements-grid">
-        
-        <div class="achieve-card card-side">
-            <div class="card-header">ANNOUNCEMENTS</div>
-            <div class="card-body">
-                <ul class="notice-list">
-                    <li>> B.Tech Sem II, IV, VI & VIII (ATKT) Exam Timetable, May 2026.</li>
-                    <li>> M.Tech Sem I (2025-26 Supplementary) Exam Timetable.</li>
-                    <li>> NIRF Innovation Ranking 2023 Update.</li>
-                    <li>> NBA Accreditation granted for 3 years to UG Programs.</li>
-                </ul>
+            <div class="dept-card hover-green">
+                <div class="dept-tag">>_ UG_DEGREE</div>
+                <h3 class="dept-name">CYBER<br>SECURITY</h3>
             </div>
         </div>
 
-        <div class="achieve-card card-center">
-            <div class="card-header">ACHIEVE-CARD</div>
-            <div class="card-body image-swap-container">
-                <img src="https://www.pce.ac.in/wp-content/uploads/2023/06/Nirf-Band.jpg" class="img-front" alt="NIRF Award">
-                <img src="https://www.pce.ac.in/wp-content/uploads/2023/06/ARI-C-33505.jpg" class="img-back" alt="PCE Achievement">
-                <div class="image-tag"></div>
+        <div class="dept-footer">
+            <div class="neo-divider"></div>
+            <div class="footer-stats">
+                <span>TOTAL_DEPARTMENTS: 08</span>
+                <span>TOTAL_FACULTY: 112</span>
             </div>
         </div>
+    </section>
 
-        <div class="achieve-card card-side">
-            <div class="card-header">ONLINE PORTAL</div>
-            <div class="card-body">
-                <div class="portal-item">
-                    <h4 class="bold-text">HB3 PORTAL</h4>
+    <section class="achievements-section reveal">
+        <div class="achievements-grid">
+
+            <div class="achieve-card card-side">
+                <div class="card-header">ANNOUNCEMENTS</div>
+                <div class="card-body">
                     <ul class="notice-list">
-                        <li>> DSE Notice - Vacant seats and Merit List</li>
-                        <li>> Scholarship Details 2026</li>
-                        <li>> Important Admission Notice</li>
+                        <li>> B.Tech Sem II, IV, VI & VIII (ATKT) Exam Timetable, May 2026.</li>
+                        <li>> M.Tech Sem I (2025-26 Supplementary) Exam Timetable.</li>
+                        <li>> NIRF Innovation Ranking 2023 Update.</li>
+                        <li>> NBA Accreditation granted for 3 years to UG Programs.</li>
                     </ul>
                 </div>
             </div>
-        </div>
 
-    </div>
-</section>
-
-<section class="associations-section reveal">
-    <div class="assoc-header">
-        <span class="text-green">STUDENT LIFE</span>
-        <h2 class="assoc-main-title">ASSOCIATIONS</h2>
-    </div>
-
-    <div class="assoc-grid">
-        <div class="assoc-node">
-            <div class="assoc-card">
-                <div class="card-top"><h3>AESA</h3><div class="status-sq bg-red"></div></div>
-                <p>Automobile Engineering Students' Association. Igniting passion for automotive innovation.</p>
-            </div>
-        </div>
-        <div class="assoc-node">
-            <div class="assoc-card">
-                <div class="card-top"><h3>CSI</h3><div class="status-sq bg-green"></div></div>
-                <p>Computer Society of India. Professional skills and networking among peers.</p>
-            </div>
-        </div>
-        <div class="assoc-node">
-            <div class="assoc-card">
-                <div class="card-top"><h3>ETSA</h3><div class="status-sq bg-yellow"></div></div>
-                <p>Electronics and Telecomm. Students' Association. Engineering the future.</p>
-            </div>
-        </div>
-        <div class="assoc-node">
-            <div class="assoc-card">
-                <div class="card-top"><h3>IEEE</h3><div class="status-sq bg-red"></div></div>
-                <p>Institute of Electrical and Electronics Engineers. Technical excellence on campus.</p>
-            </div>
-        </div>
-
-        <div class="assoc-node">
-            <div class="assoc-card">
-                <div class="card-top"><h3>MESA</h3><div class="status-sq bg-green"></div></div>
-                <p>Mechanical Engineering Students' Association. Building the core of industry.</p>
-            </div>
-        </div>
-        <div class="assoc-node">
-            <div class="assoc-card">
-                <div class="card-top"><h3>ISHRAE</h3><div class="status-sq bg-yellow"></div></div>
-                <p>Society of Heating and Refrigeration Engineers. HVAC innovation hub.</p>
-            </div>
-        </div>
-        <div class="assoc-node">
-            <div class="assoc-card">
-                <div class="card-top"><h3>TPC</h3><div class="status-sq bg-blue"></div></div>
-                <p>Training and Placement Committee. Bridging the gap to corporate careers.</p>
-            </div>
-        </div>
-        <div class="assoc-node">
-            <div class="assoc-card">
-                <div class="card-top"><h3>NATURE CLUB</h3><div class="status-sq bg-red"></div></div>
-                <p>Environmental awareness and sustainability initiatives on campus.</p>
-            </div>
-        </div>
-
-        <div class="assoc-node">
-            <div class="assoc-card">
-                <div class="card-top"><h3>NSS</h3><div class="status-sq bg-yellow"></div></div>
-                <p>National Service Scheme. Education through community service.</p>
-            </div>
-        </div>
-        <div class="assoc-node">
-            <div class="assoc-card">
-                <div class="card-top"><h3>SWE</h3><div class="status-sq bg-yellow"></div></div>
-                <p>Society of Women Engineers. Empowering women in technical fields.</p>
-            </div>
-        </div>
-        <div class="assoc-node">
-            <div class="assoc-card">
-                <div class="card-top"><h3>TAPAS</h3><div class="status-sq bg-green"></div></div>
-                <p>Social activity wing for community outreach and development.</p>
-            </div>
-        </div>
-        <div class="assoc-node">
-            <div class="assoc-card">
-                <div class="card-top"><h3>HYPERION</h3><div class="status-sq bg-blue"></div></div>
-                <p>Formula student racing team. High-performance engineering and design.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="testimonials-section reveal">
-    <div class="testimonial-header">
-        <div class="dot-row">
-            <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-        </div>
-        <h2 class="testimonial-title">STUDENT TESTIMONIALS</h2>
-        <div class="neo-divider"></div>
-    </div>
-
-    <div class="testimonial-marquee">
-        <div class="marquee-track">
-            <div class="test-card border-purple">
-                <div class="card-meta">2025.txt <span class="report-tag">REPORT_001</span></div>
-                <p>"PCE provided the perfect environment for me to grow as a developer. The faculty support was exceptional."</p>
-                <div class="stars">★★★★★</div>
-            </div>
-            <div class="test-card border-blue">
-                <div class="card-meta">2025.txt <span class="report-tag">REPORT_002</span></div>
-                <p>"The B.Tech program is industry-aligned. I secured a placement at a top tech firm thanks to the TPC."</p>
-                <div class="stars">★★★★★</div>
-            </div>
-            <div class="test-card border-green">
-                <div class="card-meta">2026.txt <span class="report-tag">REPORT_003</span></div>
-                <p>"From Alegria to the AI Lab, campus life was a journey I'll never forget. Truly Engineering Unfiltered."</p>
-                <div class="stars">★★★★☆</div>
-            </div>
-            <div class="test-card border-pink">
-                <div class="card-meta">2025.txt <span class="report-tag">REPORT_004</span></div>
-                <p>"A hub for hackers and creators. The hands-on projects helped me build a solid portfolio."</p>
-                <div class="stars">★★★★★</div>
-            </div>
-            <div class="test-card border-yellow">
-                <div class="card-meta">2026.txt <span class="report-tag">REPORT_005</span></div>
-                <p>"The best four years of my life. Proud to be an Alumnus of Pillai College of Engineering."</p>
-                <div class="stars">★★★★★</div>
-            </div>
-            <div class="test-card border-blue">
-                <div class="card-meta">2024.txt <span class="report-tag">REPORT_006</span></div>
-                <p>"Specializing in Data Science here gave me a massive edge in my current career."</p>
-                <div class="stars">★★★★★</div>
-            </div>
-            <div class="test-card border-purple">
-                <div class="card-meta">2025.txt <span class="report-tag">REPORT_007</span></div>
-                <p>"The student associations like CSI and IEEE made networking so much easier."</p>
-                <div class="stars">★★★★☆</div>
-            </div>
-            <div class="test-card border-green">
-                <div class="card-meta">2026.txt <span class="report-tag">REPORT_008</span></div>
-                <p>"Great infrastructure and the Neo-Brutalist campus vibe is just the beginning!"</p>
-                <div class="stars">★★★★★</div>
-            </div>
-            
-            <div class="test-card border-purple">
-                <div class="card-meta">2025.txt <span class="report-tag">REPORT_001</span></div>
-                <p>"PCE provided the perfect environment for me to grow as a developer."</p>
-                <div class="stars">★★★★★</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="contact" class="contact-section reveal">
-    <div class="contact-container">
-        <div class="contact-badge" style="background: var(--neo-yellow); transform: rotate(-2deg);">
-            UNIVERSITY_CONNECT
-        </div>
-
-        <div class="contact-card">
-            
-            <div class="contact-info">
-                <h2 class="contact-title">LET'S<br>TALK<br>ENGINEERING.</h2>
-                <p class="contact-description">
-                    Connect with Pillai College of Engineering for admissions, research collaborations, or technical inquiries.
-                </p>
-                
-                <div class="info-item">
-                    <div class="info-icon"><i class="ri-mail-fill"></i></div>
-                    <span>admissions@pillai.edu</span>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon"><i class="ri-map-pin-fill"></i></div>
-                    <span>New Panvel, Navi Mumbai</span>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon"><i class="ri-phone-fill"></i></div>
-                    <span>022 2748 1764</span>
+            <div class="achieve-card card-center">
+                <div class="card-header">ACHIEVE-CARD</div>
+                <div class="card-body image-swap-container">
+                    <img src="https://www.pce.ac.in/wp-content/uploads/2023/06/Nirf-Band.jpg" class="img-front"
+                        alt="NIRF Award">
+                    <img src="https://www.pce.ac.in/wp-content/uploads/2023/06/ARI-C-33505.jpg" class="img-back"
+                        alt="PCE Achievement">
+                    <div class="image-tag"></div>
                 </div>
             </div>
 
-            <div class="floating-divider-node"></div>
-
-            <div class="contact-form-box">
-                <form action="core/process_contact.php" method="POST">
-                    <div class="input-group">
-                        <label>>_ NAME</label>
-                        <input type="text" name="name" placeholder="FULL NAME / ENROLLMENT ID" required>
+            <div class="achieve-card card-side">
+                <div class="card-header">ONLINE PORTAL</div>
+                <div class="card-body">
+                    <div class="portal-item">
+                        <h4 class="bold-text">HB3 PORTAL</h4>
+                        <ul class="notice-list">
+                            <li>> DSE Notice - Vacant seats and Merit List</li>
+                            <li>> Scholarship Details 2026</li>
+                            <li>> Important Admission Notice</li>
+                        </ul>
                     </div>
-
-                    <div class="input-group">
-                        <label>>_ EMAIL</label>
-                        <input type="email" name="email" placeholder="EMAIL ADDRESS" required>
-                    </div>
-
-                    <div class="input-group">
-                        <label>>_ MESSAGE</label>
-                        <textarea name="message" rows="4" placeholder="INQUIRY DETAILS..." required></textarea>
-                    </div>
-
-                    <button type="submit" class="transmit-btn">
-                        TRANSMIT DATA
-                    </button>
-                </form>
+                </div>
             </div>
 
         </div>
-    </div>
-</section>
+    </section>
 
-<footer>
-    <div class="footer-grid">
-        <div class="footer-brand">
-            <h3 class="footer-logo">PCE.CMS</h3>
-            <p>The Future of Engineering Management.</p>
+    <section class="associations-section reveal">
+        <div class="assoc-header">
+            <span class="text-green">STUDENT LIFE</span>
+            <h2 class="assoc-main-title">ASSOCIATIONS</h2>
         </div>
-        
-        <div class="footer-links">
-            <div class="link-col">
-                <h4>SYSTEM</h4>
-                <a href="#">/DASHBOARD</a>
-                <a href="#">/RESOURCES</a>
-                <a href="#">/PORTAL</a>
+
+        <div class="assoc-grid">
+            <div class="assoc-node">
+                <div class="assoc-card">
+                    <div class="card-top">
+                        <h3>AESA</h3>
+                        <div class="status-sq bg-red"></div>
+                    </div>
+                    <p>Automobile Engineering Students' Association. Igniting passion for automotive innovation.</p>
+                </div>
             </div>
-            <div class="link-col">
-                <h4>SOCIAL</h4>
-                <a href="#">/INSTAGRAM</a>
-                <a href="#">/LINKEDIN</a>
-                <a href="#">/GITHUB</a>
+            <div class="assoc-node">
+                <div class="assoc-card">
+                    <div class="card-top">
+                        <h3>CSI</h3>
+                        <div class="status-sq bg-green"></div>
+                    </div>
+                    <p>Computer Society of India. Professional skills and networking among peers.</p>
+                </div>
+            </div>
+            <div class="assoc-node">
+                <div class="assoc-card">
+                    <div class="card-top">
+                        <h3>ETSA</h3>
+                        <div class="status-sq bg-yellow"></div>
+                    </div>
+                    <p>Electronics and Telecomm. Students' Association. Engineering the future.</p>
+                </div>
+            </div>
+            <div class="assoc-node">
+                <div class="assoc-card">
+                    <div class="card-top">
+                        <h3>IEEE</h3>
+                        <div class="status-sq bg-red"></div>
+                    </div>
+                    <p>Institute of Electrical and Electronics Engineers. Technical excellence on campus.</p>
+                </div>
+            </div>
+
+            <div class="assoc-node">
+                <div class="assoc-card">
+                    <div class="card-top">
+                        <h3>MESA</h3>
+                        <div class="status-sq bg-green"></div>
+                    </div>
+                    <p>Mechanical Engineering Students' Association. Building the core of industry.</p>
+                </div>
+            </div>
+            <div class="assoc-node">
+                <div class="assoc-card">
+                    <div class="card-top">
+                        <h3>ISHRAE</h3>
+                        <div class="status-sq bg-yellow"></div>
+                    </div>
+                    <p>Society of Heating and Refrigeration Engineers. HVAC innovation hub.</p>
+                </div>
+            </div>
+            <div class="assoc-node">
+                <div class="assoc-card">
+                    <div class="card-top">
+                        <h3>TPC</h3>
+                        <div class="status-sq bg-blue"></div>
+                    </div>
+                    <p>Training and Placement Committee. Bridging the gap to corporate careers.</p>
+                </div>
+            </div>
+            <div class="assoc-node">
+                <div class="assoc-card">
+                    <div class="card-top">
+                        <h3>NATURE CLUB</h3>
+                        <div class="status-sq bg-red"></div>
+                    </div>
+                    <p>Environmental awareness and sustainability initiatives on campus.</p>
+                </div>
+            </div>
+
+            <div class="assoc-node">
+                <div class="assoc-card">
+                    <div class="card-top">
+                        <h3>NSS</h3>
+                        <div class="status-sq bg-yellow"></div>
+                    </div>
+                    <p>National Service Scheme. Education through community service.</p>
+                </div>
+            </div>
+            <div class="assoc-node">
+                <div class="assoc-card">
+                    <div class="card-top">
+                        <h3>SWE</h3>
+                        <div class="status-sq bg-yellow"></div>
+                    </div>
+                    <p>Society of Women Engineers. Empowering women in technical fields.</p>
+                </div>
+            </div>
+            <div class="assoc-node">
+                <div class="assoc-card">
+                    <div class="card-top">
+                        <h3>TAPAS</h3>
+                        <div class="status-sq bg-green"></div>
+                    </div>
+                    <p>Social activity wing for community outreach and development.</p>
+                </div>
+            </div>
+            <div class="assoc-node">
+                <div class="assoc-card">
+                    <div class="card-top">
+                        <h3>HYPERION</h3>
+                        <div class="status-sq bg-blue"></div>
+                    </div>
+                    <p>Formula student racing team. High-performance engineering and design.</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="footer-bottom">
-        <span>© 2026 PILLAI COLLEGE OF ENGINEERING. ALL_SYSTEMS_OPERATIONAL</span>
-        <div class="status-dot"></div>
-    </div>
-</footer>
+    </section>
+
+    <section class="testimonials-section reveal">
+        <div class="testimonial-header">
+            <div class="dot-row">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <h2 class="testimonial-title">STUDENT TESTIMONIALS</h2>
+            <div class="neo-divider"></div>
+        </div>
+
+        <div class="testimonial-marquee">
+            <div class="marquee-track">
+                <div class="test-card border-purple">
+                    <div class="card-meta">2025.txt <span class="report-tag">REPORT_001</span></div>
+                    <p>"PCE provided the perfect environment for me to grow as a developer. The faculty support was
+                        exceptional."</p>
+                    <div class="stars">★★★★★</div>
+                </div>
+                <div class="test-card border-blue">
+                    <div class="card-meta">2025.txt <span class="report-tag">REPORT_002</span></div>
+                    <p>"The B.Tech program is industry-aligned. I secured a placement at a top tech firm thanks to the
+                        TPC."</p>
+                    <div class="stars">★★★★★</div>
+                </div>
+                <div class="test-card border-green">
+                    <div class="card-meta">2026.txt <span class="report-tag">REPORT_003</span></div>
+                    <p>"From Alegria to the AI Lab, campus life was a journey I'll never forget. Truly Engineering
+                        Unfiltered."</p>
+                    <div class="stars">★★★★☆</div>
+                </div>
+                <div class="test-card border-pink">
+                    <div class="card-meta">2025.txt <span class="report-tag">REPORT_004</span></div>
+                    <p>"A hub for hackers and creators. The hands-on projects helped me build a solid portfolio."</p>
+                    <div class="stars">★★★★★</div>
+                </div>
+                <div class="test-card border-yellow">
+                    <div class="card-meta">2026.txt <span class="report-tag">REPORT_005</span></div>
+                    <p>"The best four years of my life. Proud to be an Alumnus of Pillai College of Engineering."</p>
+                    <div class="stars">★★★★★</div>
+                </div>
+                <div class="test-card border-blue">
+                    <div class="card-meta">2024.txt <span class="report-tag">REPORT_006</span></div>
+                    <p>"Specializing in Data Science here gave me a massive edge in my current career."</p>
+                    <div class="stars">★★★★★</div>
+                </div>
+                <div class="test-card border-purple">
+                    <div class="card-meta">2025.txt <span class="report-tag">REPORT_007</span></div>
+                    <p>"The student associations like CSI and IEEE made networking so much easier."</p>
+                    <div class="stars">★★★★☆</div>
+                </div>
+                <div class="test-card border-green">
+                    <div class="card-meta">2026.txt <span class="report-tag">REPORT_008</span></div>
+                    <p>"Great infrastructure and the Neo-Brutalist campus vibe is just the beginning!"</p>
+                    <div class="stars">★★★★★</div>
+                </div>
+
+                <div class="test-card border-purple">
+                    <div class="card-meta">2025.txt <span class="report-tag">REPORT_001</span></div>
+                    <p>"PCE provided the perfect environment for me to grow as a developer."</p>
+                    <div class="stars">★★★★★</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section reveal">
+        <div class="contact-container">
+            <div class="contact-badge" style="background: var(--neo-yellow); transform: rotate(-2deg);">
+                UNIVERSITY_CONNECT
+            </div>
+
+            <div class="contact-card">
+
+                <div class="contact-info">
+                    <h2 class="contact-title">LET'S<br>TALK<br>ENGINEERING.</h2>
+                    <p class="contact-description">
+                        Connect with Pillai College of Engineering for admissions, research collaborations, or technical
+                        inquiries.
+                    </p>
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="ri-mail-fill"></i></div>
+                        <span>admissions@pillai.edu</span>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="ri-map-pin-fill"></i></div>
+                        <span>New Panvel, Navi Mumbai</span>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="ri-phone-fill"></i></div>
+                        <span>022 2748 1764</span>
+                    </div>
+                </div>
+
+                <div class="floating-divider-node"></div>
+
+                <div class="contact-form-box">
+                    <form action="core/process_contact.php" method="POST">
+                        <div class="input-group">
+                            <label>>_ NAME</label>
+                            <input type="text" name="name" placeholder="FULL NAME / ENROLLMENT ID" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>>_ EMAIL</label>
+                            <input type="email" name="email" placeholder="EMAIL ADDRESS" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>>_ MESSAGE</label>
+                            <textarea name="message" rows="4" placeholder="INQUIRY DETAILS..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="transmit-btn">
+                            TRANSMIT DATA
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3 class="footer-logo">PCE.CMS</h3>
+                <p>The Future of Engineering Management.</p>
+            </div>
+
+            <div class="footer-links">
+                <div class="link-col">
+                    <h4>SYSTEM</h4>
+                    <a href="#">/DASHBOARD</a>
+                    <a href="#">/RESOURCES</a>
+                    <a href="#">/PORTAL</a>
+                </div>
+                <div class="link-col">
+                    <h4>SOCIAL</h4>
+                    <a href="#">/INSTAGRAM</a>
+                    <a href="#">/LINKEDIN</a>
+                    <a href="#">/GITHUB</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 PILLAI COLLEGE OF ENGINEERING. ALL_SYSTEMS_OPERATIONAL</span>
+            <div class="status-dot"></div>
+        </div>
+    </footer>
 
     <!-- PCE Study Buddy AI Chatbot -->
     <button id="chat-toggle" class="pomo-toggle-btn">
@@ -472,7 +671,8 @@
         </div>
         <div class="chat-body" id="chat-body">
             <div class="chat-message ai-message">
-                <strong>SYSTEM:</strong> Hello! I am the PCE Study Buddy AI. How can I assist you with career guidance or student queries today? (e.g., 'bonafide certificate', 'concession', 'career')
+                <strong>SYSTEM:</strong> Hello! I am the PCE Study Buddy AI. How can I assist you with career guidance
+                or student queries today? (e.g., 'bonafide certificate', 'concession', 'career')
             </div>
         </div>
         <div class="chat-input-area">
@@ -482,58 +682,58 @@
     </div>
 
     <script>
-    // === CHATBOT JS INLINE ===
-    document.addEventListener('DOMContentLoaded', () => {
-        const chatToggleBtn = document.getElementById('chat-toggle');
-        const chatWidget = document.getElementById('chat-widget');
-        const chatCloseBtn = document.getElementById('chat-close');
-        const chatSendBtn = document.getElementById('chat-send');
-        const chatInput = document.getElementById('chat-input');
-        const chatBody = document.getElementById('chat-body');
+        // === CHATBOT JS INLINE ===
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatToggleBtn = document.getElementById('chat-toggle');
+            const chatWidget = document.getElementById('chat-widget');
+            const chatCloseBtn = document.getElementById('chat-close');
+            const chatSendBtn = document.getElementById('chat-send');
+            const chatInput = document.getElementById('chat-input');
+            const chatBody = document.getElementById('chat-body');
 
-        const GEMINI_API_KEY = "AIzaSyDjDUDarjqpI5yqXt_lN5f0qV4XUIfR4I4"; 
+            const GEMINI_API_KEY = "AIzaSyBV5jHjHRPE2I07V1Jd0lK9yTxc99qyr0I";
 
-        setTimeout(() => {
-            if (chatWidget) chatWidget.style.display = 'flex';
-        }, 2000);
+            setTimeout(() => {
+                if (chatWidget) chatWidget.style.display = 'flex';
+            }, 2000);
 
-        if (chatToggleBtn) chatToggleBtn.addEventListener('click', () => chatWidget.style.display = 'flex');
-        if (chatCloseBtn) chatCloseBtn.addEventListener('click', () => chatWidget.style.display = 'none');
-        if (chatSendBtn) chatSendBtn.addEventListener('click', handleSend);
+            if (chatToggleBtn) chatToggleBtn.addEventListener('click', () => chatWidget.style.display = 'flex');
+            if (chatCloseBtn) chatCloseBtn.addEventListener('click', () => chatWidget.style.display = 'none');
+            if (chatSendBtn) chatSendBtn.addEventListener('click', handleSend);
 
-        window.handleChatKeyPress = function (e) {
-            if (e.key === 'Enter') handleSend();
-        }
-
-        async function handleSend() {
-            if (!chatInput || !chatBody) return;
-            const text = chatInput.value.trim();
-            if (text === '') return;
-
-            appendMessage('USER', text, 'user-message');
-            chatInput.value = '';
-
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = `chat-message ai-message`;
-            loadingDiv.innerHTML = `<strong>GEMINI:</strong> <span style="font-family:'JetBrains Mono'; animation: blink 1s infinite alternate;">...processing...</span>`;
-            chatBody.appendChild(loadingDiv);
-            chatBody.scrollTop = chatBody.scrollHeight;
-
-            try {
-                const aiText = await fetchGeminiResponse(text);
-                loadingDiv.innerHTML = `<strong>GEMINI:</strong> ` + formatResponse(aiText);
-            } catch (error) {
-                loadingDiv.innerHTML = `<strong>SYSTEM_ERROR:</strong> ${error.message}`;
-                loadingDiv.style.color = "red";
+            window.handleChatKeyPress = function (e) {
+                if (e.key === 'Enter') handleSend();
             }
-            chatBody.scrollTop = chatBody.scrollHeight;
-        }
 
-        async function fetchGeminiResponse(userQuery) {
-            if (!GEMINI_API_KEY) throw new Error("Missing API Key.");
+            async function handleSend() {
+                if (!chatInput || !chatBody) return;
+                const text = chatInput.value.trim();
+                if (text === '') return;
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
-            const contextData = `
+                appendMessage('USER', text, 'user-message');
+                chatInput.value = '';
+
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = `chat-message ai-message`;
+                loadingDiv.innerHTML = `<strong>GEMINI:</strong> <span style="font-family:'JetBrains Mono'; animation: blink 1s infinite alternate;">...processing...</span>`;
+                chatBody.appendChild(loadingDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+
+                try {
+                    const aiText = await fetchGeminiResponse(text);
+                    loadingDiv.innerHTML = `<strong>GEMINI:</strong> ` + formatResponse(aiText);
+                } catch (error) {
+                    loadingDiv.innerHTML = `<strong>SYSTEM_ERROR:</strong> ${error.message}`;
+                    loadingDiv.style.color = "red";
+                }
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+
+            async function fetchGeminiResponse(userQuery) {
+                if (!GEMINI_API_KEY) throw new Error("Missing API Key.");
+
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+                const contextData = `
             PCE College FAQ Database:
             1. Bonafide Certificate: Log in to the PCE Student Portal, go to "Student Services", fill request form. Collect physical copy at admin office.
             2. Railway Concession: On portal, select "Railway Concession", enter source/destination, submit.
@@ -557,27 +757,28 @@
             20. Tech Issues: Visit System Admin 3rd floor or email support@mes.ac.in.
             `;
 
-            const payload = {
-                contents: [{ parts: [{ text: `You are the official PCE Study Buddy AI Chatbot. Answer strictly using this database: ${contextData} Query: "${userQuery}"` }] }]
-            };
+                const payload = {
+                    contents: [{ parts: [{ text: `You are the official PCE Study Buddy AI Chatbot. Answer strictly using this database: ${contextData} Query: "${userQuery}"` }] }]
+                };
 
-            const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-            const data = await response.json();
+                const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const data = await response.json();
 
-            if (!response.ok) throw new Error(data.error?.message || "Failed to fetch from Gemini API.");
-            if (data.candidates && data.candidates[0].content) return data.candidates[0].content.parts[0].text;
-            throw new Error("Received anomalous payload structure from Gemini.");
-        }
+                if (!response.ok) throw new Error(data.error?.message || "Failed to fetch from Gemini API.");
+                if (data.candidates && data.candidates[0].content) return data.candidates[0].content.parts[0].text;
+                throw new Error("Received anomalous payload structure from Gemini.");
+            }
 
-        function formatResponse(text) { return text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>'); }
-        function appendMessage(sender, text, className) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `chat-message ${className}`;
-            msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
-            chatBody.appendChild(msgDiv);
-        }
-    });
+            function formatResponse(text) { return text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>'); }
+            function appendMessage(sender, text, className) {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `chat-message ${className}`;
+                msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
+                chatBody.appendChild(msgDiv);
+            }
+        });
     </script>
     <script src="assets/js/script.js"></script>
 </body>
+
 </html>

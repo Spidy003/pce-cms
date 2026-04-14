@@ -8,15 +8,14 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Space+Grotesk:wght@800&display=swap" rel="stylesheet">
     <style>
         .error-msg {
-            color: red;
-            font-size: 0.8rem;
-            margin-top: 5px;
-            display: block;
-            display: none; /* Hidden by default */
+            color: #e00;
+            font-size: 0.78rem;
+            font-family: 'JetBrains Mono';
+            margin-top: 4px;
+            display: none;
         }
-        .error-border {
-            border-color: red !important;
-        }
+        .error-border { border-color: red !important; box-shadow: 4px 4px 0 red !important; }
+        .success-border { border-color: #00c853 !important; box-shadow: 4px 4px 0 #00c853 !important; }
     </style>
 </head>
 <body class="grid-wrapper" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 40px 0;">
@@ -37,13 +36,13 @@
                 <h1 class="contact-title" style="font-size: 3rem;">LOGIN.</h1>
                 <form id="login-form" action="../core/auth_logic.php?action=login" method="POST">
                     <div class="input-group">
-                        <label>> EMAIL_ADDRESS</label>
-                        <input type="email" id="login_email" name="email" placeholder="student@pillai.edu">
+                        <label for="login_email">> EMAIL_ADDRESS</label>
+                        <input type="email" id="login_email" name="email" placeholder="student@pillai.edu" autocomplete="email">
                         <span class="error-msg" id="error_login_email"></span>
                     </div>
                     <div class="input-group">
-                        <label>> PASSWORD</label>
-                        <input type="password" id="login_password" name="password" placeholder="********">
+                        <label for="login_password">> PASSWORD</label>
+                        <input type="password" id="login_password" name="password" placeholder="********" autocomplete="current-password">
                         <span class="error-msg" id="error_login_password"></span>
                     </div>
                     <button type="submit" id="login_submit" class="transmit-btn">START YOUR JOURNEY</button>
@@ -54,59 +53,59 @@
                 <h1 class="contact-title" style="font-size: 3rem;">JOIN_PCE.</h1>
                 <form id="reg-form" action="../core/auth_logic.php?action=register" method="POST">
                     <div class="input-group">
-                        <label>> FULL NAME</label>
-                        <input type="text" id="full_name" name="full_name" placeholder="John Doe">
+                        <label for="full_name">> FULL NAME</label>
+                        <input type="text" id="full_name" name="full_name" placeholder="John Doe" autocomplete="name">
                         <span class="error-msg" id="error_full_name"></span>
                     </div>
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div class="input-group">
-                            <label>> D.O.B</label>
-                            <input type="date" id="dob" name="dob">
+                            <label for="dob">> D.O.B</label>
+                            <input type="date" id="dob" name="dob" autocomplete="bday">
                             <span class="error-msg" id="error_dob"></span>
                         </div>
                         <div class="input-group">
-                            <label>> BLOOD GRP</label>
-                            <input type="text" id="blood_group" name="blood_group" placeholder="B+ve">
+                            <label for="blood_group">> BLOOD GRP</label>
+                            <input type="text" id="blood_group" name="blood_group" placeholder="B+ve" autocomplete="off">
                             <span class="error-msg" id="error_blood_group"></span>
                         </div>
                     </div>
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div class="input-group">
-                            <label>> PHONE NUMBER</label>
-                            <input type="text" id="phone_number" name="phone_number" placeholder="9876543210">
+                            <label for="phone_number">> PHONE NUMBER</label>
+                            <input type="text" id="phone_number" name="phone_number" placeholder="9876543210" autocomplete="tel">
                             <span class="error-msg" id="error_phone_number"></span>
                         </div>
                         <div class="input-group">
-                            <label>> ADMISSION_NO</label>
-                            <input type="text" id="admission_no" name="admission_no" placeholder="PCE24_001">
+                            <label for="admission_no">> ADMISSION_NO</label>
+                            <input type="text" id="admission_no" name="admission_no" placeholder="PCE24_001" autocomplete="off">
                             <span class="error-msg" id="error_admission_no"></span>
                         </div>
                     </div>
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div class="input-group">
-                            <label>> YEAR</label>
-                            <input type="number" id="admission_year" name="admission_year" value="2026">
+                            <label for="admission_year">> YEAR</label>
+                            <input type="number" id="admission_year" name="admission_year" value="2026" autocomplete="off">
                             <span class="error-msg" id="error_admission_year"></span>
                         </div>
                         <div class="input-group">
-                            <label>> EMAIL_ID</label>
-                            <input type="email" id="email" name="email">
+                            <label for="email">> EMAIL_ID</label>
+                            <input type="email" id="email" name="email" autocomplete="email">
                             <span class="error-msg" id="error_email"></span>
                         </div>
                     </div>
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div class="input-group">
-                            <label>> SET PASSWORD</label>
-                            <input type="password" id="password" name="password">
+                            <label for="password">> SET PASSWORD</label>
+                            <input type="password" id="password" name="password" autocomplete="new-password">
                             <span class="error-msg" id="error_password"></span>
                         </div>
                         <div class="input-group">
-                            <label>> CONFIRM PASS</label>
-                            <input type="password" id="confirm_password" name="confirm_password">
+                            <label for="confirm_password">> CONFIRM PASS</label>
+                            <input type="password" id="confirm_password" name="confirm_password" autocomplete="new-password">
                             <span class="error-msg" id="error_confirm_password"></span>
                         </div>
                     </div>
@@ -155,6 +154,6 @@
         }
 
     </script>
-    <script src="assets/js/validation.js"></script>
+    <script src="../assets/js/validation.js"></script>
 </body>
 </html>

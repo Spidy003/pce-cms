@@ -24,9 +24,9 @@ if ($action == 'register') {
     $stmt->bind_param("sssssssss", $full_name, $email, $password, $dob, $year, $ad_no, $roll_no, $blood_group, $role);
     
     if ($stmt->execute()) {
-        echo "<script>alert('Registration Successful! Wait for Admin approval.'); window.location='../login.php';</script>";
+        echo "<script>alert('Registration Successful! Wait for Admin approval.'); window.location='../auth/login.php';</script>";
     } else {
-        echo "<script>alert('Error: Email or Admission No already exists.'); window.location='../login.php';</script>";
+        echo "<script>alert('Error: Email or Admission No already exists.'); window.location='../auth/login.php';</script>";
     }
 }
 
@@ -69,7 +69,7 @@ if ($action == 'login') {
         exit(); 
         
     } else {
-        echo "<script>alert('Invalid Email or Password'); window.location='../login.php';</script>";
+        echo "<script>alert('Invalid Email or Password'); window.location='../auth/login.php';</script>";
     }
 }
 ?>
