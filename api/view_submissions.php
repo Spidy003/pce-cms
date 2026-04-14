@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'faculty') {
-    header("Location: ../login.php");
+    header("Location: ../auth/login.php");
     exit();
 }
 include '../config/db_connect.php';

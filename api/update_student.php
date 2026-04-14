@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id'])) {
     }
 
     $stmt->execute();
-    header("Location: ../student_dashboard.php?status=success");
+    header("Location: ../student/student_dashboard.php?status=success");
     exit();
 }
 ?>

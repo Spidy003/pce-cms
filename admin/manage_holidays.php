@@ -1,10 +1,10 @@
 <?php
 session_start();
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
+    header("Location: ../auth/login.php");
     exit();
 }
-include 'config/db_connect.php';
+include '../config/db_connect.php';
 
 // Fetch current holiday to show in the form
 $res = mysqli_query($conn, "SELECT * FROM holidays LIMIT 1");
@@ -16,7 +16,7 @@ $current = mysqli_fetch_assoc($res);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCE CMS | Holiday Control</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Space+Grotesk:wght@800&display=swap" rel="stylesheet">
 </head>
 <body class="flex-center">
@@ -48,12 +48,12 @@ $current = mysqli_fetch_assoc($res);
         </form>
         
         <div style="margin-top: 1.5rem; text-align: center;">
-            <a href="admin_dashboard.php" style="font-family: 'JetBrains Mono'; font-size: 0.75rem; font-weight: bold; text-decoration: underline; color: black;">
+            <a href="../admin/admin_dashboard.php" style="font-family: 'JetBrains Mono'; font-size: 0.75rem; font-weight: bold; text-decoration: underline; color: black;">
                 <- BACK_TO_DASHBOARD
             </a>
         </div>
     </div>
 
-    <script src="assets/js/script.js"></script>
+    <script src="../assets/js/script.js"></script>
 </body>
 </html>

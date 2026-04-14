@@ -58,13 +58,13 @@ if ($action == 'login') {
 
         // ROLE-BASED REDIRECT
         if ($_SESSION['user_role'] === 'admin') {
-            header("Location: ../admin_dashboard.php");
+            header("Location: ../admin/admin_dashboard.php");
         } elseif ($_SESSION['user_role'] === 'faculty') {
-            header("Location: ../faculty_dashboard.php");
+            header("Location: ../faculty/faculty_dashboard.php");
         } elseif ($_SESSION['user_role'] === 'student') {
-            header("Location: ../student_dashboard.php");
+            header("Location: ../student/student_dashboard.php");
         } else {
-            header("Location: ../login.php?error=unknown_role");
+            header("Location: ../auth/login.php?error=unknown_role");
         }
         exit(); 
         

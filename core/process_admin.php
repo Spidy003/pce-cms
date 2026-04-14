@@ -17,7 +17,7 @@ $action = $_GET['action'] ?? '';
 if ($action == 'approve') {
     $id = intval($_GET['id']);
     $conn->query("UPDATE users SET status = 1 WHERE id = $id");
-    header("Location: ../admin_dashboard.php");
+    header("Location: ../admin/admin_dashboard.php");
     exit();
 }
 
@@ -28,7 +28,7 @@ if ($action == 'roleswap') {
     $stmt = $conn->prepare("UPDATE users SET role = ? WHERE email = ?");
     $stmt->bind_param("ss", $role, $email);
     $stmt->execute();
-    header("Location: ../admin_dashboard.php#roles");
+    header("Location: ../admin/admin_dashboard.php#roles");
     exit();
 }
 
@@ -44,7 +44,7 @@ if ($action == 'post_notice') {
     $stmt->bind_param("ss", $title, $content);
     $stmt->execute();
     
-    header("Location: ../admin_dashboard.php?status=notice_posted");
+    header("Location: ../admin/admin_dashboard.php?status=notice_posted");
     exit();
 }
 
@@ -61,7 +61,7 @@ if ($action == 'csv_upload' && isset($_FILES["csv_file"])) {
         }
         fclose($file);
     }
-    header("Location: ../admin_dashboard.php?status=upload_complete");
+    header("Location: ../admin/admin_dashboard.php?status=upload_complete");
     exit();
 }
 
@@ -83,7 +83,7 @@ if ($action == 'assign_subject') {
         exit();
     }
     
-    header("Location: ../admin_dashboard.php?status=" . ($success ? "assigned" : "error"));
+    header("Location: ../admin/admin_dashboard.php?status=" . ($success ? "assigned" : "error"));
     exit();
 }
 
@@ -91,7 +91,7 @@ if ($action == 'assign_subject') {
 if ($action == 'toggle_fee_lock') {
     $id = intval($_GET['id']);
     $conn->query("UPDATE fees SET is_locked = 1 - is_locked WHERE id = $id");
-    header("Location: ../admin_dashboard.php");
+    header("Location: ../admin/admin_dashboard.php");
     exit();
 }
 
@@ -102,9 +102,9 @@ if ($action == 'create_class') {
         $stmt = $conn->prepare("INSERT INTO classes (class_name) VALUES (?)");
         $stmt->bind_param("s", $c_name);
         $stmt->execute();
-        header("Location: ../admin_dashboard.php?status=class_created");
+        header("Location: ../admin/admin_dashboard.php?status=class_created");
     } else {
-        header("Location: ../admin_dashboard.php?status=error_empty");
+        header("Location: ../admin/admin_dashboard.php?status=error_empty");
     }
     exit();
 }
@@ -157,11 +157,11 @@ if ($action == 'add_timetable') {
     $stmt->bind_param("isssss", $class_id, $batch, $subject, $day, $start_time, $end_time);
     $stmt->execute();
     
-    header("Location: ../admin_dashboard.php?status=timetable_added");
+    header("Location: ../admin/admin_dashboard.php?status=timetable_added");
     exit();
 }
 
 // --- 10. FALLBACK REDIRECT ---
-header("Location: ../admin_dashboard.php");
+header("Location: ../admin/admin_dashboard.php");
 exit();
 ?>

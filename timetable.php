@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
-    header("Location: login.php");
+    header("Location: auth/login.php");
     exit();
 }
 include 'config/db_connect.php';
@@ -27,7 +27,7 @@ $result = mysqli_query($conn, $query);
                 <h1 style="font-size: 4.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: -3px; font-style: italic; margin: 0;">Weekly_Grid.</h1>
                 <p style="font-family: 'JetBrains Mono'; font-size: 1.25rem; margin-top: 0.5rem; background: var(--neo-yellow); display: inline-block; padding: 0 8px; border: 2px solid black;">Batch: SE-IT-2026</p>
             </div>
-            <a href="student_dashboard.php" class="neo-btn" style="text-decoration: none; background: var(--neo-black); color: white;">CLOSE_X</a>
+            <a href="student/student_dashboard.php" class="neo-btn" style="text-decoration: none; background: var(--neo-black); color: white;">CLOSE_X</a>
         </header>
 
         <div class="timetable-wrapper reveal">

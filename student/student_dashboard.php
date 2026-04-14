@@ -1,10 +1,10 @@
 <?php
-include 'config/db_connect.php';
+include '../config/db_connect.php';
 session_start();
 
 // Security Gate
 if (!isset($_SESSION['user_role']) || strtolower($_SESSION['user_role']) !== 'student') {
-    header("Location: login.php");
+    header("Location: ../auth/login.php");
     exit();
 }
 
@@ -50,7 +50,7 @@ $status_color = ($attendance >= 75) ? '#00ff00' : '#FF3131';
     <title>PCE | STUDENT_LOG</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Space+Grotesk:wght@800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/chatbot.css">
+    <link rel="stylesheet" href="../assets/css/chatbot.css">
     <style>
         /* --- CORE THEME --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -164,7 +164,7 @@ $status_color = ($attendance >= 75) ? '#00ff00' : '#FF3131';
             <p style="color: #888; font-family: 'JetBrains Mono';">> STATUS: NO_ACTIVE_LECTURES</p>
         <?php endif; ?>
         
-        <a href="logout.php" class="neo-btn" style="background: var(--neo-pink); color: white; margin-top: 50px; display: block; text-align: center;">LOGOUT_</a>
+        <a href="../auth/logout.php" class="neo-btn" style="background: var(--neo-pink); color: white; margin-top: 50px; display: block; text-align: center;">LOGOUT_</a>
     </aside>
 
     <main class="dashboard-main">
@@ -212,7 +212,7 @@ $status_color = ($attendance >= 75) ? '#00ff00' : '#FF3131';
                                 <p style="font-size:0.7rem; margin: 5px 0; font-family: 'JetBrains Mono';"><?php echo $as['description']; ?></p>
                                 
                                 <?php if(!$check_sub): ?>
-                                    <form action="core/process_student.php?action=upload_assignment" method="POST" enctype="multipart/form-data" style="margin-top:10px; border-top: 1px dashed black; padding-top: 10px;">
+                                    <form action="../core/process_student.php?action=upload_assignment" method="POST" enctype="multipart/form-data" style="margin-top:10px; border-top: 1px dashed black; padding-top: 10px;">
                                         <input type="hidden" name="assignment_id" value="<?php echo $as['id']; ?>">
                                         <input type="file" name="sub_file" required style="font-size: 0.7rem; border: none; padding: 0;">
                                         <button type="submit" class="neo-btn" style="background:var(--neo-blue); color:white; font-size:0.6rem; width: 100%; margin-top: 5px;">UPLOAD_SUBMISSION</button>
@@ -314,6 +314,6 @@ $status_color = ($attendance >= 75) ? '#00ff00' : '#FF3131';
         </div>
     </div>
 
-    <script src="assets/js/chatbot.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/chatbot.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

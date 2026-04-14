@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCE CMS | Gateway</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Space+Grotesk:wght@800&display=swap" rel="stylesheet">
     <style>
         .error-msg {
@@ -35,10 +35,10 @@
 
             <div id="login-form-area">
                 <h1 class="contact-title" style="font-size: 3rem;">LOGIN.</h1>
-                <form id="login-form" action="core/auth_logic.php?action=login" method="POST">
+                <form id="login-form" action="../core/auth_logic.php?action=login" method="POST">
                     <div class="input-group">
                         <label>> EMAIL_ADDRESS</label>
-                        <input type="email" id="login_email" name="email" placeholder="shravan@pillai.edu">
+                        <input type="email" id="login_email" name="email" placeholder="student@pillai.edu">
                         <span class="error-msg" id="error_login_email"></span>
                     </div>
                     <div class="input-group">
@@ -52,7 +52,7 @@
 
             <div id="register-form-area" style="display: none;">
                 <h1 class="contact-title" style="font-size: 3rem;">JOIN_PCE.</h1>
-                <form id="reg-form" action="core/auth_logic.php?action=register" method="POST">
+                <form id="reg-form" action="../core/auth_logic.php?action=register" method="POST">
                     <div class="input-group">
                         <label>> FULL NAME</label>
                         <input type="text" id="full_name" name="full_name" placeholder="John Doe">

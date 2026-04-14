@@ -1,9 +1,9 @@
 <?php
-include 'config/db_connect.php';
+include '../config/db_connect.php';
 session_start();
 
 if (!isset($_SESSION['user_role']) || strtolower($_SESSION['user_role']) !== 'faculty') {
-    header("Location: login.php");
+    header("Location: ../auth/login.php");
     exit();
 }
 
@@ -18,7 +18,7 @@ $my_subjects = $conn->query("SELECT COUNT(*) as total FROM subject_assignments W
 <head>
     <meta charset="UTF-8">
     <title>PCE | FACULTY_TERMINAL</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Space+Grotesk:wght@800&display=swap" rel="stylesheet">
     <style>
         /* --- CORE UI --- */
@@ -80,7 +80,7 @@ $my_subjects = $conn->query("SELECT COUNT(*) as total FROM subject_assignments W
             <h1 class="hero-title">FACULTY<br>COMMAND.</h1>
             <p style="font-family: 'JetBrains Mono'; margin-top: 10px;">> ID: <?php echo $faculty_id; ?> | SUBJECTS: <?php echo $my_subjects; ?></p>
         </div>
-        <a href="logout.php" class="neo-btn" style="background: black; color: white; padding: 15px 30px;">LOGOUT_</a>
+        <a href="../auth/logout.php" class="neo-btn" style="background: black; color: white; padding: 15px 30px;">LOGOUT_</a>
     </header>
 
     <div class="search-container">
@@ -161,7 +161,7 @@ $my_subjects = $conn->query("SELECT COUNT(*) as total FROM subject_assignments W
             <div class="command-grid" style="grid-template-columns: 1fr 1fr; margin-top:20px;">
                 <div class="admin-card">
                     <h3>POST NEW ASSIGNMENT</h3>
-                    <form action="core/process_faculty.php?action=post_assignment" method="POST" enctype="multipart/form-data">
+                    <form action="../core/process_faculty.php?action=post_assignment" method="POST" enctype="multipart/form-data">
                         <select name="assign_id" class="neo-input">
                             <?php 
                             $maps = $conn->query("SELECT * FROM subject_assignments WHERE faculty_id = $faculty_id");
@@ -197,7 +197,7 @@ $my_subjects = $conn->query("SELECT COUNT(*) as total FROM subject_assignments W
         <div id="tpl-notice">
             <h1>/ SUBJECT_BROADCAST</h1>
             <div class="admin-card">
-                <form action="core/process_faculty.php?action=post_alert" method="POST">
+                <form action="../core/process_faculty.php?action=post_alert" method="POST">
                     <label>> ALERT_HEADING</label><input type="text" name="title" class="neo-input">
                     <label>> MESSAGE_BODY</label><textarea name="msg" class="neo-input" style="height:100px;"></textarea>
                     <button type="submit" class="neo-btn" style="background:var(--neo-green); color:black; width:100%; box-shadow:5px 5px 0px black;">PUSH_TO_STUDENTS</button>
@@ -224,7 +224,7 @@ $my_subjects = $conn->query("SELECT COUNT(*) as total FROM subject_assignments W
 
         // AJAX TO LOAD STUDENT UPLOADS
         function loadSubmissions(assignId) {
-            fetch('core/process_faculty.php?action=view_submissions&as_id=' + assignId)
+            fetch('../core/process_faculty.php?action=view_submissions&as_id=' + assignId)
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('submission-viewer').innerHTML = "<div class='admin-card'><h3>STUDENT_SUBMISSIONS</h3>" + data + "</div>";
@@ -238,7 +238,7 @@ $my_subjects = $conn->query("SELECT COUNT(*) as total FROM subject_assignments W
                 alert("> SYSTEM_WARNING: Please select a valid subject grouping first.");
                 return;
             }
-            fetch('core/process_faculty.php?action=fetch_students&type=' + type + '&as_id=' + assignId)
+            fetch('../core/process_faculty.php?action=fetch_students&type=' + type + '&as_id=' + assignId)
                 .then(response => response.text())
                 .then(data => {
                     const target = (type === 'attendance') ? 'attendance-viewer' : 'grader-viewer';

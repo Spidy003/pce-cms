@@ -27,7 +27,7 @@ if ($action == 'post_assignment') {
     $stmt->bind_param("isssss", $faculty_id, $sub_name, $div, $batch, $title, $desc);
 
     if ($stmt->execute()) {
-        header("Location: ../faculty_dashboard.php?status=post_success");
+        header("Location: ../faculty/faculty_dashboard.php?status=post_success");
     }
     exit();
 }
@@ -76,7 +76,7 @@ if ($action == 'grade_sub') {
     $stmt->bind_param("si", $status, $sub_id);
     $stmt->execute();
 
-    header("Location: ../faculty_dashboard.php?status=submission_graded");
+    header("Location: ../faculty/faculty_dashboard.php?status=submission_graded");
     exit();
 }
 // --- FETCH STUDENTS BY ASSIGNED BATCH ---
@@ -158,7 +158,7 @@ if ($action == 'push_marks') {
         $stmt->bind_param("isiii", $s_id, $sub_name, $m1, $m2, $avg);
         $stmt->execute();
     }
-    header("Location: ../faculty_dashboard.php?status=marks_pushed");
+    header("Location: ../faculty/faculty_dashboard.php?status=marks_pushed");
     exit();
 }
 
@@ -179,6 +179,6 @@ if ($action == 'push_attendance') {
         $stmt->bind_param("isii", $s_id, $sub_name, $total, $pr);
         $stmt->execute();
     }
-    header("Location: ../faculty_dashboard.php?status=attendance_pushed");
+    header("Location: ../faculty/faculty_dashboard.php?status=attendance_pushed");
     exit();
 }

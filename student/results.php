@@ -1,10 +1,10 @@
 <?php
 session_start();
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
-    header("Location: login.php");
+    header("Location: ../auth/login.php");
     exit();
 }
-include 'config/db_connect.php';
+include '../config/db_connect.php';
 
 $user_id = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT subject_name, marks_obtained, ia1, ia2 FROM results WHERE student_id = ?");
@@ -32,7 +32,7 @@ $average = !empty($marks) ? round(array_sum($marks)/count($marks), 1) : 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCE CMS | Performance Matrix</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 </head>
@@ -41,7 +41,7 @@ $average = !empty($marks) ? round(array_sum($marks)/count($marks), 1) : 0;
     <div class="container-narrow">
         <header class="results-header reveal">
             <h1 style="font-size: 3rem; font-weight: 900; text-transform: uppercase; font-style: italic; letter-spacing: -2px;">Result_Stats</h1>
-            <a href="student_dashboard.php" class="neo-btn" style="background: var(--neo-black); color: white; text-decoration: none;">BACK_</a>
+            <a href="../student/student_dashboard.php" class="neo-btn" style="background: var(--neo-black); color: white; text-decoration: none;">BACK_</a>
         </header>
 
         <div class="chart-container reveal">
@@ -84,7 +84,7 @@ $average = !empty($marks) ? round(array_sum($marks)/count($marks), 1) : 0;
 
     
 
-    <script src="assets/js/script.js"></script>
+    <script src="../assets/js/script.js"></script>
 
     <script>
         const ctx = document.getElementById('resultsChart').getContext('2d');

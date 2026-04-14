@@ -34,7 +34,7 @@ if ($action == 'upload_assignment') {
             $stmt->bind_param("iis", $assign_id, $student_id, $file_name);
             
             if ($stmt->execute()) {
-                header("Location: ../student_dashboard.php?status=upload_success");
+                header("Location: ../student/student_dashboard.php?status=upload_success");
             } else {
                 echo "Database Error: " . $conn->error;
             }
@@ -42,11 +42,11 @@ if ($action == 'upload_assignment') {
             echo "File Move Error. Check folder permissions.";
         }
     } else {
-        header("Location: ../student_dashboard.php?status=upload_failed");
+        header("Location: ../student/student_dashboard.php?status=upload_failed");
     }
     exit();
 }
 
 // Fallback
-header("Location: ../student_dashboard.php");
+header("Location: ../student/student_dashboard.php");
 exit();
