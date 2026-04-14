@@ -50,8 +50,33 @@ $status_color = ($attendance >= 75) ? '#00ff00' : '#FF3131';
     <title>PCE | STUDENT_LOG</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Space+Grotesk:wght@800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/chatbot.css">
     <style>
+        /* --- AI CHATBOT WIDGET INLINE --- */
+        .pomo-toggle-btn { position: fixed; bottom: 30px; right: 30px; background: #ffff00; border: 4px solid black; padding: 15px 20px; font-family: 'JetBrains Mono', monospace; font-weight: 900; box-shadow: 6px 6px 0px black; cursor: pointer; z-index: 1000; transition: 0.2s; font-size: 1.1rem; color: black; }
+        .pomo-toggle-btn:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0px black; }
+        .pomodoro-widget { position: fixed; bottom: 90px; right: 30px; width: 350px; background: white; border: 5px solid black; box-shadow: 10px 10px 0px black; z-index: 1100; font-family: 'Space Grotesk', sans-serif; display: flex; flex-direction: column; }
+        .pomo-header { background: #0077ff; color: white; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid black; }
+        .pomo-header h3 { font-family: 'JetBrains Mono', monospace; font-weight: 900; font-size: 1.1rem; margin: 0; }
+        .pomo-close-btn { background: #ff007f; color: white; border: 3px solid black; width: 30px; height: 30px; font-weight: bold; cursor: pointer; box-shadow: 2px 2px 0px black; display: flex; align-items: center; justify-content: center; }
+        .pomo-close-btn:hover { background: white; color: black; }
+        .chat-body { padding: 15px; display: flex; flex-direction: column; gap: 10px; height: 300px; overflow-y: auto; background: #fdfdfd; border-bottom: 4px solid black; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+        .chat-message { padding: 10px; border: 2px solid black; width: 85%; line-height: 1.4; word-wrap: break-word;}
+        .ai-message { background: #eeeeee; align-self: flex-start; box-shadow: 3px 3px 0px black; }
+        .user-message { background: #ffff00; align-self: flex-end; box-shadow: -3px 3px 0px black; }
+        .chat-input-area { display: flex; padding: 10px; background: #ffffff; gap: 10px; }
+        .chat-input-area input { flex-grow: 1; border: 3px solid black; padding: 8px; font-family: 'JetBrains Mono', monospace; outline: none; }
+        .chat-input-area input:focus { background: #ffff00; }
+        .pomo-btn { font-family: 'JetBrains Mono', monospace; font-weight: 900; border: 3px solid black; padding: 8px 15px; cursor: pointer; box-shadow: 3px 3px 0px black; transition: 0.1s; font-size: 1.1rem; color: black; display: flex; align-items: center; justify-content: center;}
+        .pomo-btn:active { transform: translate(3px, 3px); box-shadow: 0px 0px 0px black; }
+        .bg-green { background: #00ff00; }
+
+        @keyframes blink { from { opacity: 1; } to { opacity: 0.2; } }
+
+        @media (max-width: 480px) {
+            .pomodoro-widget { width: 90vw; right: 5vw; bottom: 80px; }
+            .pomo-toggle-btn { bottom: 20px; right: 20px; font-size: 0.9rem; padding: 10px 15px; }
+        }
+
         /* --- CORE THEME --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
@@ -314,6 +339,102 @@ $status_color = ($attendance >= 75) ? '#00ff00' : '#FF3131';
         </div>
     </div>
 
-    <script src="../assets/js/chatbot.js?v=<?php echo time(); ?>"></script>
+    <script>
+    // === CHATBOT JS INLINE ===
+    document.addEventListener('DOMContentLoaded', () => {
+        const chatToggleBtn = document.getElementById('chat-toggle');
+        const chatWidget = document.getElementById('chat-widget');
+        const chatCloseBtn = document.getElementById('chat-close');
+        const chatSendBtn = document.getElementById('chat-send');
+        const chatInput = document.getElementById('chat-input');
+        const chatBody = document.getElementById('chat-body');
+
+        const GEMINI_API_KEY = "AIzaSyDjDUDarjqpI5yqXt_lN5f0qV4XUIfR4I4"; 
+
+        setTimeout(() => {
+            if (chatWidget) chatWidget.style.display = 'flex';
+        }, 2000);
+
+        if (chatToggleBtn) chatToggleBtn.addEventListener('click', () => chatWidget.style.display = 'flex');
+        if (chatCloseBtn) chatCloseBtn.addEventListener('click', () => chatWidget.style.display = 'none');
+        if (chatSendBtn) chatSendBtn.addEventListener('click', handleSend);
+
+        window.handleChatKeyPress = function (e) {
+            if (e.key === 'Enter') handleSend();
+        }
+
+        async function handleSend() {
+            if (!chatInput || !chatBody) return;
+            const text = chatInput.value.trim();
+            if (text === '') return;
+
+            appendMessage('USER', text, 'user-message');
+            chatInput.value = '';
+
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = `chat-message ai-message`;
+            loadingDiv.innerHTML = `<strong>GEMINI:</strong> <span style="font-family:'JetBrains Mono'; animation: blink 1s infinite alternate;">...processing...</span>`;
+            chatBody.appendChild(loadingDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            try {
+                const aiText = await fetchGeminiResponse(text);
+                loadingDiv.innerHTML = `<strong>GEMINI:</strong> ` + formatResponse(aiText);
+            } catch (error) {
+                loadingDiv.innerHTML = `<strong>SYSTEM_ERROR:</strong> ${error.message}`;
+                loadingDiv.style.color = "red";
+            }
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        async function fetchGeminiResponse(userQuery) {
+            if (!GEMINI_API_KEY) throw new Error("Missing API Key.");
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+            const contextData = `
+            PCE College FAQ Database:
+            1. Bonafide Certificate: Log in to the PCE Student Portal, go to "Student Services", fill request form. Collect physical copy at admin office.
+            2. Railway Concession: On portal, select "Railway Concession", enter source/destination, submit.
+            3. Wrong Personal Details: Submit "Profile Update Request" via CMS. For name/DOB, visit Student Section with SSC/HSC docs.
+            4. Online Fee Payment: Go to "Fee Payment" module, select year, pay via UPI/Net Banking/Card.
+            5. Attendance Update: Marked by faculty via AMS. If wrong, approach teacher within 3 days.
+            6. Minimum Attendance: 75% min required. Less leads to terms not granted.
+            7. Internal Marks: Check "Marks/Result" section after cycle.
+            8. Hall Ticket: Go to "Exam" tab. Fees must be clear & attendance verified.
+            9. B.Tech Admission: CAP rounds by DTE/CET. Register on CET portal, list PCE preferred.
+            10. Computer Eng Cutoff: Gen category MHT-CET 93-96%, JEE Main ~73,000 rank.
+            11. IT Cutoff: MHT-CET 91-93%.
+            12. Direct Second Year (DSE): Yes, diploma holders apply via CAP based on diploma %.
+            13. Placements: TCS, Infosys, Capgemini, Accenture, Reliance, Wipro, L&T, Jio.
+            14. Packages: Avg 5 LPA, highest 15-18 LPA.
+            15. Student Associations: MESA, CSI, IEEE organize workshops, hackathons, visits.
+            16. Join Association: Register at campus desks during yearly drives.
+            17. ASK Portal: Mentor-Mentee system for certificates, co-curricular tracking.
+            18. Reset CMS Password: Click "Forgot Password", link sent to @student.mes.ac.in.
+            19. Get @student Email: Apply via Google Services link on PCE website or Admin office.
+            20. Tech Issues: Visit System Admin 3rd floor or email support@mes.ac.in.
+            `;
+
+            const payload = {
+                contents: [{ parts: [{ text: `You are the official PCE Study Buddy AI Chatbot. Answer strictly using this database: ${contextData} Query: "${userQuery}"` }] }]
+            };
+
+            const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            const data = await response.json();
+
+            if (!response.ok) throw new Error(data.error?.message || "Failed to fetch from Gemini API.");
+            if (data.candidates && data.candidates[0].content) return data.candidates[0].content.parts[0].text;
+            throw new Error("Received anomalous payload structure from Gemini.");
+        }
+
+        function formatResponse(text) { return text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>'); }
+        function appendMessage(sender, text, className) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `chat-message ${className}`;
+            msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
+            chatBody.appendChild(msgDiv);
+        }
+    });
+    </script>
 </body>
 </html>
