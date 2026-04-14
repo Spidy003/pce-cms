@@ -1,10 +1,10 @@
 <?php
 // db_connect.php
-$host = getenv('DB_HOST') ?: "127.0.0.1";
-$user = getenv('DB_USER') ?: "root";
-$pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : ""; 
-$dbname = getenv('DB_NAME') ?: "pce_college_db";
-$port = getenv('DB_PORT') ?: 3307;
+$host = getenv('DB_HOST') ?: "sql207.infinityfree.com";
+$user = getenv('DB_USER') ?: "if0_41660314";
+$pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : "h9ELE7cxjpsJ8g"; 
+$dbname = getenv('DB_NAME') ?: "if0_41660314_college_db";
+$port = getenv('DB_PORT') ?: 3306;
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
