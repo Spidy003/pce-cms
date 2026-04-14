@@ -216,7 +216,7 @@ $my_subjects = $conn->query("SELECT COUNT(*) as total FROM subject_assignments W
 
         // AJAX TO LOAD STUDENT UPLOADS
         function loadSubmissions(assignId) {
-            fetch('process_faculty.php?action=view_submissions&as_id=' + assignId)
+            fetch('core/process_faculty.php?action=view_submissions&as_id=' + assignId)
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('submission-viewer').innerHTML = "<div class='admin-card'><h3>STUDENT_SUBMISSIONS</h3>" + data + "</div>";
@@ -239,7 +239,7 @@ $my_subjects = $conn->query("SELECT COUNT(*) as total FROM subject_assignments W
             resultsContainer.innerHTML = '<div class="status-msg" style="background:var(--neo-green);">FETCHING_DATA...</div>';
             
             searchTimeout = setTimeout(() => {
-                fetch(`experiment7_action.php?query=${encodeURIComponent(query)}`)
+                fetch(`api/search_student.php?query=${encodeURIComponent(query)}`)
                     .then(response => response.json())
                     .then(data => {
                         resultsContainer.innerHTML = '';

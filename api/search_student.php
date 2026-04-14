@@ -1,20 +1,27 @@
 <?php
-include '../config/db_connect.php';
-$query = $_GET['q'] ?? '';
+require_once '../config/db_connect.php';
+header('Content-Type: application/json');
 
-if(strlen($query) >= 3) {
-    $stmt = $conn->prepare("SELECT full_name, roll_no, admission_no FROM users WHERE (full_name LIKE ? OR roll_no LIKE ?) AND role='student'");
-    $term = "%$query%";
-    $stmt->bind_param("ss", $term, $term);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    echo "<div class='admin-card' style='position:absolute; width:100%; z-index:500;'>";
-    while($row = $result->fetch_assoc()) {
-        echo "<div style='padding:10px; border-bottom:1px solid #ddd;'>
-                <strong>{$row['full_name']}</strong> | {$row['roll_no']} 
-              </div>";
+if (isset($_GET['query'])) {
+    $searchQuery = $_GET['query'];
+    $stmt = $conn->prepare("SELECT full_name, roll_no, admission_no, role FROM users WHERE full_name LIKE ? OR roll_no LIKE ?");
+    $searchTerm = "%" . $searchQuery . "%";
+    
+    if ($stmt) {
+        $stmt->bind_param("ss", $searchTerm, $searchTerm);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $users = [];
+        while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
+        }
+        echo json_encode(['status' => 'success', 'data' => $users]);
+        $stmt->close();
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Database query failed.']);
     }
-    echo "</div>";
+} else {
+    echo json_encode(['status' => 'error', 'message' => 'No search query provided.']);
 }
 ?>
