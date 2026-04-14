@@ -70,10 +70,45 @@ document.addEventListener('DOMContentLoaded', () => {
         // Using gemini-2.0-flash which is generally more stable and handles higher queue capacities
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
+        const contextData = `
+        PCE College FAQ Database:
+        1. Bonafide Certificate: Log in to the PCE Student Portal, go to "Student Services", fill request form. Collect physical copy at admin office.
+        2. Railway Concession: On portal, select "Railway Concession", enter source/destination, submit.
+        3. Wrong Personal Details: Submit "Profile Update Request" via CMS. For name/DOB, visit Student Section with SSC/HSC docs.
+        4. Online Fee Payment: Go to "Fee Payment" module, select year, pay via UPI/Net Banking/Card.
+        5. Attendance Update: Marked by faculty via AMS. If wrong, approach teacher within 3 days.
+        6. Minimum Attendance: 75% min required. Less leads to terms not granted.
+        7. Internal Marks: Check "Marks/Result" section after cycle.
+        8. Hall Ticket: Go to "Exam" tab. Fees must be clear & attendance verified.
+        9. B.Tech Admission: CAP rounds by DTE/CET. Register on CET portal, list PCE preferred.
+        10. Computer Eng Cutoff: Gen category MHT-CET 93-96%, JEE Main ~73,000 rank.
+        11. IT Cutoff: MHT-CET 91-93%.
+        12. Direct Second Year (DSE): Yes, diploma holders apply via CAP based on diploma %.
+        13. Placements: TCS, Infosys, Capgemini, Accenture, Reliance, Wipro, L&T, Jio.
+        14. Packages: Avg 5 LPA, highest 15-18 LPA.
+        15. Student Associations: MESA, CSI, IEEE organize workshops, hackathons, visits.
+        16. Join Association: Register at campus desks during yearly drives.
+        17. ASK Portal: Mentor-Mentee system for certificates, co-curricular tracking.
+        18. Reset CMS Password: Click "Forgot Password", link sent to @student.mes.ac.in.
+        19. Get @student Email: Apply via Google Services link on PCE website or Admin office.
+        20. Tech Issues: Visit System Admin 3rd floor or email support@mes.ac.in.
+        `;
+
         const payload = {
             contents: [{
                 parts: [{
-                    text: `You are an AI assistant for a college platform. A student is asking: "${userQuery}". Provide a helpful and smart response like Gemini. You can write applications, give career or course info, etc. Be concise and format with line breaks if it's long.`
+                    text: `You are the official PCE Study Buddy AI Chatbot. Answer the student's query based ONLY on the following FAQ database.
+                    
+                    FAQ Database:
+                    ${contextData}
+                    
+                    Student Query: "${userQuery}"
+                    
+                    Instructions:
+                    1. Identify the keywords.
+                    2. Answer the query concisely strictly using the provided FAQ info.
+                    3. If the answer is not in the database, politely say you don't have that information and advise them to contact support@mes.ac.in.
+                    4. Keep it brief and professional. Do not say "According to the database".`
                 }]
             }]
         };
