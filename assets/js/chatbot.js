@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // === GEMINI API INTEGRATION ===
     // Place your Gemini API Key here.
     // NOTE: For a real production app, restrict your API key to your specific domain to prevent theft!
-    const GEMINI_API_KEY = "AIzaSyAyyQACP6nnJPVEKrYuapbnoBFrNqDDKdw"; 
+    const GEMINI_API_KEY = "AIzaSyDjDUDarjqpI5yqXt_lN5f0qV4XUIfR4I4"; 
 
     if (chatToggleBtn) {
         chatToggleBtn.addEventListener('click', () => {
