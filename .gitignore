@@ -1,0 +1,16 @@
+# IDEs and Editors
+.vscode/
+.idea/
+.gemini/
+
+# System Files
+Thumbs.db
+.DS_Store
+
+# Logs
+error_log
+*.log
+
+# XAMPP / Temp
+uploads/
+tmp/

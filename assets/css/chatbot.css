@@ -1,0 +1,37 @@
+/* --- AI CHATBOT WIDGET --- */
+.pomo-toggle-btn { position: fixed; bottom: 30px; right: 30px; background: #ffff00; border: 4px solid black; padding: 15px 20px; font-family: 'JetBrains Mono', monospace; font-weight: 900; box-shadow: 6px 6px 0px black; cursor: pointer; z-index: 1000; transition: 0.2s; font-size: 1.1rem; color: black; }
+.pomo-toggle-btn:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0px black; }
+.pomodoro-widget { position: fixed; bottom: 90px; right: 30px; width: 350px; background: white; border: 5px solid black; box-shadow: 10px 10px 0px black; z-index: 1100; font-family: 'Space Grotesk', sans-serif; display: flex; flex-direction: column; }
+.pomo-header { background: #0077ff; color: white; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid black; }
+.pomo-header h3 { font-family: 'JetBrains Mono', monospace; font-weight: 900; font-size: 1.1rem; margin: 0; }
+.pomo-close-btn { background: #ff007f; color: white; border: 3px solid black; width: 30px; height: 30px; font-weight: bold; cursor: pointer; box-shadow: 2px 2px 0px black; display: flex; align-items: center; justify-content: center; }
+.pomo-close-btn:hover { background: white; color: black; }
+.chat-body { padding: 15px; display: flex; flex-direction: column; gap: 10px; height: 300px; overflow-y: auto; background: #fdfdfd; border-bottom: 4px solid black; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+.chat-message { padding: 10px; border: 2px solid black; width: 85%; line-height: 1.4; word-wrap: break-word;}
+.ai-message { background: #eeeeee; align-self: flex-start; box-shadow: 3px 3px 0px black; }
+.user-message { background: #ffff00; align-self: flex-end; box-shadow: -3px 3px 0px black; }
+.chat-input-area { display: flex; padding: 10px; background: #ffffff; gap: 10px; }
+.chat-input-area input { flex-grow: 1; border: 3px solid black; padding: 8px; font-family: 'JetBrains Mono', monospace; outline: none; }
+.chat-input-area input:focus { background: #ffff00; }
+.pomo-btn { font-family: 'JetBrains Mono', monospace; font-weight: 900; border: 3px solid black; padding: 8px 15px; cursor: pointer; box-shadow: 3px 3px 0px black; transition: 0.1s; font-size: 1.1rem; color: black; display: flex; align-items: center; justify-content: center;}
+.pomo-btn:active { transform: translate(3px, 3px); box-shadow: 0px 0px 0px black; }
+.bg-green { background: #00ff00; }
+
+@keyframes blink { 
+    from { opacity: 1; } 
+    to { opacity: 0.2; } 
+}
+
+@media (max-width: 480px) {
+    .pomodoro-widget {
+        width: 90vw;
+        right: 5vw;
+        bottom: 80px;
+    }
+    .pomo-toggle-btn {
+        bottom: 20px;
+        right: 20px;
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
+}
