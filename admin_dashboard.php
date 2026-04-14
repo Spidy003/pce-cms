@@ -285,7 +285,12 @@ $students = $conn->query("SELECT COUNT(*) as total FROM users WHERE role = 'stud
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-top:20px;">
                         <div>
                             <label>> TARGET_DIVISION</label>
-                            <input type="text" name="div" class="neo-input" placeholder="e.g. IT-A" required>
+                            <select name="div" class="neo-input">
+                                <?php 
+                                $cls = $conn->query("SELECT * FROM classes ORDER BY class_name ASC");
+                                while($c = $cls->fetch_assoc()) echo "<option value='{$c['class_name']}'>{$c['class_name']}</option>";
+                                ?>
+                            </select>
                         </div>
                         <div>
                             <label>> TARGET_BATCH</label>

@@ -157,7 +157,7 @@ $status_color = ($attendance >= 75) ? '#00ff00' : '#FF3131';
                 </div>
             <?php endwhile; 
         else: ?>
-            <p style="color: #888; font-family: 'JetBrains Mono';">> No lectures scheduled.</p>
+            <p style="color: #888; font-family: 'JetBrains Mono';">> STATUS: NO_ACTIVE_LECTURES</p>
         <?php endif; ?>
         
         <a href="logout.php" class="neo-btn" style="background: var(--neo-pink); color: white; margin-top: 50px; display: block; text-align: center;">LOGOUT_</a>
