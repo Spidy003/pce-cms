@@ -11,6 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // NOTE: For a real production app, restrict your API key to your specific domain to prevent theft!
     const GEMINI_API_KEY = "AIzaSyDjDUDarjqpI5yqXt_lN5f0qV4XUIfR4I4"; 
 
+    // Auto-pop the chatbot after 2 seconds so you don't even have to click the button
+    setTimeout(() => {
+        if (chatWidget) {
+            chatWidget.style.display = 'flex';
+        }
+    }, 2000);
+
     if (chatToggleBtn) {
         chatToggleBtn.addEventListener('click', () => {
             chatWidget.style.display = 'flex';
