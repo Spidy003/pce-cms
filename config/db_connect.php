@@ -1,10 +1,10 @@
 <?php
 // db_connect.php
-$host = "127.0.0.1"; // Try '127.0.0.1' first; if it fails, try 'localhost'
-$user = "root";
-$pass = ""; 
-$dbname = "pce_college_db";
-$port = 3307; // Default XAMPP port
+$host = getenv('DB_HOST') ?: "127.0.0.1";
+$user = getenv('DB_USER') ?: "root";
+$pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : ""; 
+$dbname = getenv('DB_NAME') ?: "pce_college_db";
+$port = getenv('DB_PORT') ?: 3307;
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
