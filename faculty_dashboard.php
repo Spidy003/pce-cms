@@ -122,30 +122,38 @@ $my_subjects = $conn->query("SELECT COUNT(*) as total FROM subject_assignments W
     <div class="hidden-tpl">
         <div id="tpl-attendance">
             <h1>/ ATTENDANCE_TERMINAL</h1>
-            <div class="admin-card" style="text-align: center; padding: 60px;">
-                <span class="card-icon" style="font-size: 5rem; margin: 0 auto 20px;">🚧</span>
-                <h2>COMING SOON</h2>
-                <p style="margin-top: 15px; font-family: 'JetBrains Mono', monospace; color: var(--neo-pink); font-weight: bold; font-size: 1.2rem;">
-                    > This module is currently undergoing system upgrades.
-                </p>
-                <p style="margin-top: 5px; font-family: 'JetBrains Mono', monospace; color: #555;">
-                    Phase II Deployment Scheduled.
-                </p>
+            <div class="admin-card">
+                <h3>SELECT BATCH PUSH</h3>
+                <div style="display:flex; gap:10px;">
+                    <select id="att_assign_id" class="neo-input">
+                        <option value="">-- Select Subject/Batch --</option>
+                        <?php 
+                        $maps = $conn->query("SELECT * FROM subject_assignments WHERE faculty_id = $faculty_id");
+                        while($m = $maps->fetch_assoc()) echo "<option value='{$m['id']}'>{$m['subject_name']} ({$m['division']} - {$m['batch_id']})</option>";
+                        ?>
+                    </select>
+                    <button type="button" class="neo-btn" style="background:var(--neo-green);" onclick="loadStudents('attendance')">LOAD_STUDENTS</button>
+                </div>
             </div>
+            <div id="attendance-viewer" style="margin-top:20px;"></div>
         </div>
 
         <div id="tpl-marks">
             <h1>/ GRADER_PORTAL</h1>
-            <div class="admin-card" style="text-align: center; padding: 60px;">
-                <span class="card-icon" style="font-size: 5rem; margin: 0 auto 20px;">🚧</span>
-                <h2>COMING SOON</h2>
-                <p style="margin-top: 15px; font-family: 'JetBrains Mono', monospace; color: var(--neo-pink); font-weight: bold; font-size: 1.2rem;">
-                    > The Grading module is under active development.
-                </p>
-                <p style="margin-top: 5px; font-family: 'JetBrains Mono', monospace; color: #555;">
-                    Phase II Deployment Scheduled.
-                </p>
+            <div class="admin-card">
+                <h3>SELECT BATCH GRADING</h3>
+                <div style="display:flex; gap:10px;">
+                    <select id="grade_assign_id" class="neo-input">
+                        <option value="">-- Select Subject/Batch --</option>
+                        <?php 
+                        $maps = $conn->query("SELECT * FROM subject_assignments WHERE faculty_id = $faculty_id");
+                        while($m = $maps->fetch_assoc()) echo "<option value='{$m['id']}'>{$m['subject_name']} ({$m['division']} - {$m['batch_id']})</option>";
+                        ?>
+                    </select>
+                    <button type="button" class="neo-btn" style="background:var(--neo-green);" onclick="loadStudents('grader')">LOAD_STUDENTS</button>
+                </div>
             </div>
+            <div id="grader-viewer" style="margin-top:20px;"></div>
         </div>
 
         <div id="tpl-assignments">
@@ -220,6 +228,21 @@ $my_subjects = $conn->query("SELECT COUNT(*) as total FROM subject_assignments W
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('submission-viewer').innerHTML = "<div class='admin-card'><h3>STUDENT_SUBMISSIONS</h3>" + data + "</div>";
+                });
+        }
+
+        // AJAX TO LOAD STUDENTS FOR ATTENDANCE AND GRADING
+        function loadStudents(type) {
+            const assignId = (type === 'attendance') ? document.getElementById('att_assign_id').value : document.getElementById('grade_assign_id').value;
+            if (!assignId) {
+                alert("> SYSTEM_WARNING: Please select a valid subject grouping first.");
+                return;
+            }
+            fetch('core/process_faculty.php?action=fetch_students&type=' + type + '&as_id=' + assignId)
+                .then(response => response.text())
+                .then(data => {
+                    const target = (type === 'attendance') ? 'attendance-viewer' : 'grader-viewer';
+                    document.getElementById(target).innerHTML = data;
                 });
         }
 

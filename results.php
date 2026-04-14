@@ -7,15 +7,19 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
 include 'config/db_connect.php';
 
 $user_id = $_SESSION['user_id'];
-$query = "SELECT subject_name, marks_obtained FROM results WHERE student_id = '$user_id'";
-$res = mysqli_query($conn, $query);
+$stmt = $conn->prepare("SELECT subject_name, marks_obtained, ia1, ia2 FROM results WHERE student_id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$res = $stmt->get_result();
 
 $subjects = [];
 $marks = [];
+$ia_data = [];
 
-while($row = mysqli_fetch_assoc($res)) {
+while($row = $res->fetch_assoc()) {
     $subjects[] = $row['subject_name'];
     $marks[] = $row['marks_obtained'];
+    $ia_data[] = $row;
 }
 
 // Handle empty data cases
@@ -42,6 +46,28 @@ $average = !empty($marks) ? round(array_sum($marks)/count($marks), 1) : 0;
 
         <div class="chart-container reveal">
             <canvas id="resultsChart"></canvas>
+        </div>
+
+        <div class="reveal" style="margin: 40px 0;">
+            <table style="width:100%; border-collapse: collapse; font-family:'JetBrains Mono'; background:white; border:4px solid black; box-shadow:8px 8px 0px black;">
+                <tr style="background:black; color:white;">
+                    <th style="padding:15px; text-align:left;">SUBJECT</th>
+                    <th style="padding:15px;">IA 1 (40)</th>
+                    <th style="padding:15px;">IA 2 (40)</th>
+                    <th style="padding:15px;">CALCULATED AVG</th>
+                </tr>
+                <?php foreach($ia_data as $data): ?>
+                <tr>
+                    <td style="padding:15px; border-bottom:2px solid black; font-weight:bold;"><?php echo $data['subject_name']; ?></td>
+                    <td style="padding:15px; border-bottom:2px solid black; text-align:center;"><?php echo $data['ia1']; ?></td>
+                    <td style="padding:15px; border-bottom:2px solid black; text-align:center;"><?php echo $data['ia2']; ?></td>
+                    <td style="padding:15px; border-bottom:2px solid black; text-align:center; color:var(--neo-green); font-weight:bold; background:#111;"><?php echo $data['marks_obtained']; ?></td>
+                </tr>
+                <?php endforeach; ?>
+                <?php if(empty($ia_data)): ?>
+                <tr><td colspan="4" style="padding:20px; text-align:center;">> NO INTERNAL MARKS UPLOADED YET.</td></tr>
+                <?php endif; ?>
+            </table>
         </div>
 
         <section class="summary-grid grid-2">

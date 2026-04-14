@@ -28,11 +28,15 @@ $notice_query = $conn->query("SELECT * FROM notices ORDER BY id DESC LIMIT 1");
 $latest_notice = $notice_query->fetch_assoc();
 
 // 3. Fetch Real Attendance
-$att_stmt = $conn->prepare("SELECT percentage FROM attendance WHERE student_id = ?");
+$att_stmt = $conn->prepare("SELECT SUM(present_lectures) as pr, SUM(total_lectures) as tot FROM attendance WHERE student_id = ?");
 $att_stmt->bind_param("i", $student_id);
 $att_stmt->execute();
 $att_res = $att_stmt->get_result()->fetch_assoc();
-$attendance = $att_res ? $att_res['percentage'] : 0; 
+if (!empty($att_res['tot']) && $att_res['tot'] > 0) {
+    $attendance = round(($att_res['pr'] / $att_res['tot']) * 100);
+} else {
+    $attendance = 100; // default state
+}
 
 // 4. Warning Logic
 $status_color = ($attendance >= 75) ? '#00ff00' : '#FF3131'; 
@@ -228,18 +232,24 @@ $status_color = ($attendance >= 75) ? '#00ff00' : '#FF3131';
 
             <div class="neo-card">
                 <h3>/ INTERNAL_SCORES</h3>
-                <table class="neo-table">
-                    <thead><tr><th>SUBJECT</th><th>UT</th><th>ASSN</th></tr></thead>
+                <table class="neo-table" style="font-size:0.8rem;">
+                    <thead><tr><th>SUBJECT</th><th>IA 1</th><th>IA 2</th><th>AVG</th></tr></thead>
                     <tbody>
                         <?php
-                        $marks_q = $conn->query("SELECT * FROM marks WHERE student_id = $student_id");
+                        $marks_q = $conn->query("SELECT * FROM results WHERE student_id = $student_id");
                         if($marks_q && $marks_q->num_rows > 0):
                             while($m = $marks_q->fetch_assoc()): ?>
-                                <tr><td><?php echo $m['subject_name']; ?></td><td><?php echo $m['ut_marks']; ?></td><td><?php echo $m['assign_marks']; ?></td></tr>
+                                <tr>
+                                    <td><strong><?php echo strtoupper($m['subject_name']); ?></strong></td>
+                                    <td><?php echo $m['ia1']; ?>/40</td>
+                                    <td><?php echo $m['ia2']; ?>/40</td>
+                                    <td style="color:var(--neo-green); font-weight:bold;"><?php echo $m['marks_obtained']; ?></td>
+                                </tr>
                             <?php endwhile; 
-                        else: echo "<tr><td colspan='3' style='text-align:center;'>No Data Found.</td></tr>"; endif; ?>
+                        else: echo "<tr><td colspan='4' style='text-align:center;'>> NO_IA_DATA_FOUND.</td></tr>"; endif; ?>
                     </tbody>
                 </table>
+                <a href="results.php" class="neo-btn" style="background:var(--neo-pink); color:white; width:100%; margin-top:15px; text-align:center;">DETAILED_MATRIX</a>
             </div>
 
             <div class="neo-card" style="background: var(--neo-blue);">
